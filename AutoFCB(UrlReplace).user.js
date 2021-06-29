@@ -47,7 +47,7 @@
             return 'go.zolomix.in/' + h.searchParams.get('link');
         } else if(url.includes('kiralikarazi.com')){
             return 'go.mof.pw/' + h.searchParams.get('link');
-        } else if(url.includes('mgnet.xyz')){
+        } else if(url.includes('mgnet.xyz')||url.includes('1bit.space')){
             waitForKeyElements('.button-element-verification',(e)=>{
                 window.addEventListener('load', (event) => {
                     window.app_country_visitor=""
