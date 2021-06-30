@@ -1,6 +1,8 @@
 (function () {
     'use strict';
     // 1. Create the button
+    var visit = document.querySelector("#visit239 > button")
+
     var button = document.createElement("button");
     // 2. Append somewhere
     var body = document.getElementsByClassName("shortlinks")[0];;
@@ -19,8 +21,7 @@
     function main() {
         let count = 0
         let speed = 4000
-        let run = GM_getValue("run")
-        let visit = document.querySelector("#visit239 > button")
+        let run = GM_getValue("run")        
         let getviews = visit.parentElement.parentElement.getElementsByClassName('info')[0].getElementsByTagName('span')[0].innerText
         let viewleft = getviews.replace(getviews.match(/\/.*/), '')
         let viewleftInt = parseInt(viewleft)
@@ -57,24 +58,33 @@
 
     body.appendChild(button);
     // // 3. Add event handler
-    if (run <= time && run != 0) {
-        button.innerHTML = "Script re-Run";
-        runAgain()
-    } else {
-        GM_setValue("run", 0)
-        button.innerHTML = "Done running script";
-    }
-
-
-    button.addEventListener("click", function () {
-        button.innerHTML = "Script Run";
-        let run = GM_getValue("run")
-        if (run == 0) {
-            console.log('Script run from Auto**', run)
-            button.innerHTML = 'Script was run from Auto** ' + run
-            GM_setValue("run", 1)
-            main()
+    if(visit!== null){
+        if (run <= time && run !== 0) {
+            button.innerHTML = "Script re-Run";
+            runAgain()
+        } else{
+            GM_setValue("run", 0)
+            button.innerHTML = "Run script";
         }
-    });
-    ////////////////
+
+
+        button.addEventListener("click", function () {
+            GM_setValue("flag", true)
+            button.innerHTML = "Script Run";
+            let run = GM_getValue("run")
+            if (run == 0) {
+                console.log('Script run from Auto**', run)
+                button.innerHTML = 'Script was run from Auto** ' + run
+                GM_setValue("run", 1)
+                main()
+            }
+        });
+    }else if(GM_getValue("flag")!==false && visit==null){
+        GM_setValue("flag",false)
+        window.addEventListener('load', (event) => {
+            $('button:contains("Not Running")')[0].click()
+        })
+    }else{
+    button.innerHTML ='Noting to do'
+    }
 })();
