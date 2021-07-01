@@ -27,7 +27,7 @@
         let viewleftInt = parseInt(viewleft)
         loop = 15
 
-        if (viewleftInt <= loop) {
+        if (viewleftInt < loop) {
             var interval = setInterval(() => {
                 $(visit)[0].click()
                 count++
@@ -79,12 +79,12 @@
                 main()
             }
         });
-    }else if(GM_getValue("flag")!==false && visit==null){
+    }else if(GM_getValue("flag")!==false && visit==null || visit.length<=10){
         GM_setValue("flag",false)
         window.addEventListener('load', (event) => {
             $('button:contains("Not Running")')[0].click()
         })
     }else{
-    button.innerHTML ='Noting to do'
+        button.innerHTML ='Noting to do'
     }
 })();
