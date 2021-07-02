@@ -38,6 +38,9 @@
         GM_SuperValue.set('delayOn', delayOn);
     } else if (delayOn.includes(host) && !/adbull/.test(host)) {
         sleep(17);
-    } else if(/adbull/.test(host)){sleep(5)}
+    } else if(/adbull/.test(host)){
+        waitForKeyElements("#go-submit", (e) => {
+            sleep(17)
+        },true,0,-1 );}
 
 })();
