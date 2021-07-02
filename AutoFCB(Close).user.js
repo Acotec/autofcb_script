@@ -1,5 +1,13 @@
 (function () {
     'use strict';
-    var Nav=(()=>{var e=performance.getEntriesByType("navigation")[0].redirectCount,r=document.referrer.includes("shortlinks/visited/");1==e||1==r?(window.close(),window.close()):waitForKeyElements("div.alert-success",e=>{window.close()},true,10,-1)})();
-
-    })();
+    var navigate = performance.getEntriesByType("navigation")[0].type == 'navigate'
+    var ref_self = /auto(faucet|claim|bitco)/ig.test(document.referrer)
+    var referrer = document.referrer.includes("shortlinks/visited/");
+    if ((navigate && !ref_self) || referrer ) {
+        window.close()
+    }else {
+        waitForKeyElements("div.alert-success", function(e) {
+            window.close();
+        }, true, 10, -1);
+    }
+})();
