@@ -39,7 +39,7 @@
     } else if (delayOn.includes(host) && !/adbull/.test(host)) {
         sleep(17);
     } else if(/adbull/.test(host)){
-        waitForKeyElements("#go-submit", (e) => {
+        waitForKeyElements(".btn-primary", (e) => {
             sleep(17)
         },true,0,-1 );}
 
