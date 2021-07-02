@@ -25,7 +25,7 @@
         let getviews = visit.parentElement.parentElement.getElementsByClassName('info')[0].getElementsByTagName('span')[0].innerText
         let viewleft = getviews.replace(getviews.match(/\/.*/), '')
         let viewleftInt = parseInt(viewleft)
-        loop = 15
+        loop = 17
 
         if (viewleftInt < loop) {
             var interval = setInterval(() => {
