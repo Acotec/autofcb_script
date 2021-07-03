@@ -9,14 +9,16 @@
     var body = document.getElementsByClassName("shortlinks")[0];;
     button.innerHTML = "Run Script";
     function main() {
-        let speed=4000
+        let speed=5000
         let i=0
         let inter = setInterval(()=>{
             i++
             visit.click()
             if(i>=limit){
                 button.innerHTML ='Done opening '+limit+' time'
-                clearInterval(inter)}
+                clearInterval(inter)
+                window.close();window.close()
+            }
         },speed)
         }
 
