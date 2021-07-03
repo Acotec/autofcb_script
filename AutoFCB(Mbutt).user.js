@@ -5,19 +5,21 @@
     var visitR = visit && parseInt(visit.parentElement.parentElement.getElementsByClassName('info')[0].getElementsByTagName('span')[0].innerText.replace(/\/.*/, ''))
     var button = document.createElement("button");
     var limit = 15
+    var reload = performance.getEntriesByType("navigation")[0].type =='reload'
     // 2. Append somewhere
     var body = document.getElementsByClassName("shortlinks")[0];;
     button.innerHTML = "Run Script";
     function main() {
         let speed=5000
         let i=0
-        let inter = setInterval(()=>{
+        var inter = setInterval(()=>{
             i++
             visit.click()
             if(i>=limit){
+                clearInterval(inter)
                 button.innerHTML ='Done opening '+limit+' time'
                 clearInterval(inter)
-                window.close();window.close()
+                window.close()
             }
         },speed)
         }
@@ -25,24 +27,29 @@
 
     body.appendChild(button);
     // // 3. Add event handler
-    if(visit!== null || visitR>=limit){
+    if((reload && GM_getValue("flag", true)) && (visit!== null || visitR>=limit)){
+        button.innerHTML = "Script Run";
+        main()
+    }
+    else if(visit !== null || visitR>=limit){
         button.addEventListener("click", function () {
             GM_setValue("flag", true)
-            button.innerHTML = "Script Run";
-            main()
+            window.location.reload();
         });
     }else if(GM_getValue("flag")==true && visitR>=limit ){
-        button.innerHTML = 'Rerun'
         main()
+        button.innerHTML = 'Rerun'
     }
 
     else if(GM_getValue("flag")==true && (visit==null||visitR<=limit)){
+        alert(GM_getValue("flag")==true)
         GM_setValue("flag",false)
         button.innerHTML ='Main Script Run '
         window.addEventListener('load', (event) => {
-            $('button:contains("Not Running")')[0].click()
+            document.getElementsByTagName('button')[2].click()
         })
     }else{
+        GM_setValue("flag",false)
         button.innerHTML ='Noting to do'
     }
 })();
