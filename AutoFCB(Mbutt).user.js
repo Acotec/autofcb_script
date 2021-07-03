@@ -10,21 +10,20 @@
     button.innerHTML = "Run Script";
     function main() {
         let speed=4000
-        let i =0
+        let i=0
         let inter = setInterval(()=>{
-            if(i<=limit){
-                speed+=20
-                i++
-                visit.click()
-                main()
-            }else{
-                clearInterval(inter)
-            }
+            i++
+            visit.click()
+            if(i>=limit){
+                button.innerHTML ='Done opening '+limit+' time'
+                clearInterval(inter)}
         },speed)
         }
+
+
     body.appendChild(button);
     // // 3. Add event handler
-    if(visit!== null && visitR>=limit){
+    if(visit!== null || visitR>=limit){
         button.addEventListener("click", function () {
             GM_setValue("flag", true)
             button.innerHTML = "Script Run";
@@ -34,6 +33,7 @@
         });
     }else if(GM_getValue("flag")==true && (visit==null||visitR<=limit)){
         GM_setValue("flag",false)
+        button.innerHTML ='Main Script Run '
         window.addEventListener('load', (event) => {
             $('button:contains("Not Running")')[0].click()
         })
