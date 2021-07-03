@@ -29,11 +29,14 @@
         button.addEventListener("click", function () {
             GM_setValue("flag", true)
             button.innerHTML = "Script Run";
-            console.log('Script run from Auto***')
-            button.innerHTML = 'Script was run from Auto**'
             main()
         });
-    }else if(GM_getValue("flag")==true && (visit==null||visitR<=limit)){
+    }else if(GM_getValue("flag")==true && visitR>=limit ){
+        button.innerHTML = 'Rerun'
+        main()
+    }
+
+    else if(GM_getValue("flag")==true && (visit==null||visitR<=limit)){
         GM_setValue("flag",false)
         button.innerHTML ='Main Script Run '
         window.addEventListener('load', (event) => {
