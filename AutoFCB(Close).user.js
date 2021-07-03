@@ -7,3 +7,4 @@
     if ((navigate && !ref_self) || (reload && visited) ) {
         window.close();window.close();window.close();window.close();window.close();window.close()
     }
+})();
