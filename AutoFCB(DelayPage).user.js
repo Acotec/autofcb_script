@@ -37,13 +37,8 @@
     } else if (back && /auto(faucet|claim|bitco)/ig.test(document.referrer) && !(delayOn.includes(host) || /auto(faucet|claim|bitco)/ig.test(host)) ) {
         newDelay.push(host)
         GM_SuperValue.set(' newDelay', newDelay);
-    } else if (delayOn.includes(host) && !/adbull/.test(host)) {
+    } else if (delayOn.includes(host)) {
         sleep(17);
-    } else if(/adbull/.test(host)){
-        waitForKeyElements(".btn-primary", (e) => {
-            if (e){window.location.reload()
-            e.click()}else{sleep(15);}
-        },true,0,-1 );
     }
-
+    
 })();
