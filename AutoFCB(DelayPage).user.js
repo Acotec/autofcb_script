@@ -32,6 +32,8 @@
     }
     if(/adbull/.test(host)){
         var inter=setTimeout(()=>{location.reload(false)},25*1000)
+        null!=sessionStorage.getItem("reloaded")||sleep(17);
+        sessionStorage.setItem('reloaded', 'yes');
     }
     if (autofcb) {
         waitForKeyElements("div.alert-danger", (element) => {
@@ -40,7 +42,7 @@
     } else if (back && /auto(faucet|claim|bitco)/ig.test(document.referrer) && !(delayOn.includes(host) || /auto(faucet|claim|bitco)/ig.test(host)) ) {
         newDelay.push(host)
         GM_SuperValue.set(' newDelay', newDelay);
-    } else if (delayOn.includes(host)) {
+    } else if (delayOn.includes(host) && !/adbull/.test(host)) {
         sleep(17);
     }
 
