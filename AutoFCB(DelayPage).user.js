@@ -30,6 +30,9 @@
             window.close()
         }
     }
+    if(/adbull/.test(host)){
+        var inter=setTimeout(()=>{location.reload(false)},25*1000)
+    }
     if (autofcb) {
         waitForKeyElements("div.alert-danger", (element) => {
             addDelayorClose(element)
@@ -40,5 +43,5 @@
     } else if (delayOn.includes(host)) {
         sleep(17);
     }
-    
+
 })();
