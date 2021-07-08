@@ -33,6 +33,14 @@
             // a.href = 'https://linksly.co/' + path;
             // a.click();
             return ('linksly.co/'+ path)
+        } else if(/mixespecialidades.live|tecnoinfo.xyz/.test(url) && h.pathname === '/check/' && /^\?([^&]+)/.test(h.search)){
+            const m = document.createElement('meta');
+            m.name = 'referrer';
+            m.content = 'origin';
+            document.head.appendChild(m);
+            const a = document.createElement('a');
+            a.href = RegExp.$1;
+            a.click();
         } else if(url.includes('crazyblog.in')){
             if(h.pathname.includes('demo')){
                 path = h.pathname.replace(/.*\//,'')
@@ -42,7 +50,6 @@
             }if(h.searchParams.has('link')){
                 return ('cblink.crazyblog.in' + h.searchParams.get('link'))
             }
-
         } else if(url.includes('amazingdarpon.com')&& h.searchParams.has('link')){
             return 'go.zolomix.in/' + h.searchParams.get('link');
         } else if(url.includes('kiralikarazi.com')){
@@ -60,9 +67,7 @@
             window.addEventListener('load', (event) => {
                 window.location=atob(tokenURL)
             })
-
         }
-
     })(new URL(window.location.href))
     if (l) {
         window.location.replace(new URL('https://' + l.replace(/https:\/\//,'')));
