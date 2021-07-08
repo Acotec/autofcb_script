@@ -4,13 +4,13 @@
     var visit = document.querySelector("#visit239 > button")
     var visitR = visit && parseInt(visit.parentElement.parentElement.getElementsByClassName('info')[0].getElementsByTagName('span')[0].innerText.replace(/\/.*/, ''))
     var button = document.createElement("button");
-    var limit = 15
+    var limit = 50
     var reload = performance.getEntriesByType("navigation")[0].type =='reload'
     // 2. Append somewhere
     var body = document.getElementsByClassName("shortlinks")[0];;
     button.innerHTML = "Run Script";
     function main() {
-        let speed=5000
+        let speed=10000
         let i=0
         var inter = setInterval(()=>{
             i++
@@ -27,22 +27,17 @@
 
     body.appendChild(button);
     // // 3. Add event handler
-    if((reload && GM_getValue("flag", true)) && (visit!== null || visitR>=limit)){
+    if((reload && GM_getValue("flag", true)) && visit!== null){
         button.innerHTML = "Script Run";
         main()
     }
-    else if(visit !== null || visitR>=limit){
+    else if(visit !== null){
         button.addEventListener("click", function () {
             GM_setValue("flag", true)
             window.location.reload();
         });
-    }else if(GM_getValue("flag")==true && visitR>=limit ){
-        main()
-        button.innerHTML = 'Rerun'
     }
-
-    else if(GM_getValue("flag")==true && (visit==null||visitR<=limit)){
-        alert(GM_getValue("flag")==true)
+    else if(GM_getValue("flag")==true && visit==null){
         GM_setValue("flag",false)
         button.innerHTML ='Main Script Run '
         window.addEventListener('load', (event) => {
