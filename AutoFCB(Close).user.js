@@ -1,11 +1,6 @@
-(function () {
-    function OnPhone(){
-        var c = getCookie("visited");
-        if (c === "yes") {
-            window.close();window.close();window.close();window.close();window.close();window.close()
-        }
-        setCookie("visited", "yes",300)}
-
+function OnPhone(){
+        window.close();window.close();window.close();window.close();window.close();window.close();
+    }
     function OnLaptop(){
         var navigate = performance.getEntriesByType("navigation")[0].type == 'navigate'
         var reload = performance.getEntriesByType("navigation")[0].type =='reload'
@@ -16,4 +11,3 @@
         }
     }
     OnPhone()
-})();
