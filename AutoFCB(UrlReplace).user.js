@@ -34,13 +34,29 @@
             // a.click();
             return ('linksly.co/'+ path)
         } else if(/mixespecialidades.live|tecnoinfo.xyz/.test(url) && h.pathname === '/check/' && /^\?([^&]+)/.test(h.search)){
+            path = h.search.replace(/\?/,'')
+            // return ('linksly.co/'+path)
             const m = document.createElement('meta');
             m.name = 'referrer';
             m.content = 'origin';
             document.head.appendChild(m);
-            const a = document.createElement('a');
-            a.href = RegExp.$1;
-            a.click();
+            //const a = document.createElement('a');
+            // a.href = 'https://linksly.co/' + path;
+            // a.click();
+            location=path
+        } else if(/cekip.site/.test(url) && /^\/go\/([^\/]+)/.test(h.pathname)){
+            path = atob(h.pathname).slice(3)
+            try {
+                const m = document.createElement('meta');
+                m.name = 'referrer';
+                m.content = 'origin';
+                document.head.appendChild(m);
+                //const a = document.createElement('a');
+                // a.href = atob(RegExp.$1);
+                // a.click();
+                location=path
+            } catch(e) {}
+
         } else if(url.includes('crazyblog.in')){
             if(h.pathname.includes('demo')){
                 path = h.pathname.replace(/.*\//,'')
