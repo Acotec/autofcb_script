@@ -30,8 +30,14 @@
     if((reload && GM_getValue("flag", true)) && visit!== null){
         button.innerHTML = "Script Run";
         main()
+        button.addEventListener("click", function () {
+            GM_setValue("flag", false)
+            button.innerHTML ='Script Stop'
+            window.location.reload();
+        });
     }
     else if(visit !== null){
+        button.innerHTML = "Run Script";
         button.addEventListener("click", function () {
             GM_setValue("flag", true)
             window.location.reload();
