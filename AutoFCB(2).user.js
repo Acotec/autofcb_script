@@ -17,8 +17,8 @@
     var i = 0; //index (for looping purpose)
     var interval; //for setInterval
     var duration; //for setInterval duration
-    var speed = GM_getValue('speed',100); //the duration speed
-    "undefined"!=String(speed)&&"NaN"!=String(speed)&&"null"!=String(GM_getValue(speed))||GM_setValue("speed",100);
+    var speed = GM_getValue('speed',0.1); //the duration speed
+    "undefined"!=String(speed)&&"NaN"!=String(speed)&&"null"!=String(GM_getValue(speed))||GM_setValue("speed",0.1);
 
     // 1. Create the button
     var button = document.createElement("button");
@@ -169,7 +169,7 @@
                         //console.log('wont ',limit)
                     } else {
                         i++; //increment the index
-                        duration = i * GM_getValue('speed')
+                        duration = i * GM_getValue('speed')*1000
                         //console.log(i)
 
                         var inter = setInterval(() => {
@@ -200,7 +200,7 @@
             }
             clearInterval(interval); //clear
             //console.log(limit)
-            //console.log('duration using is',duration)
+            //console.log('duration using is',(duration/1000).toFixed(1))
             if (limit != 0) {
                 appear(); //re-run
             } else {
@@ -235,21 +235,22 @@
     speed_sub.innerHTML = 'speed -'
 
     body1.appendChild(dis);
-    dis.innerHTML = 'DS - ' + speed//DS=default Speed
+    dis.innerHTML = 'DS - ' + speed +' Seconds'//DS=default Speed
 
     // // 3. Add event handler
     button.addEventListener("click", function() {
         checkButton()
     });
     speed_add.addEventListener("click", function() {
-        speed += 10
+        speed = parseFloat((speed+0.1).toFixed(1))
         GM_setValue("speed", speed);
-        dis.innerHTML = 'CS - ' + GM_getValue('speed') // CS = current setSpeed
+        dis.innerHTML = 'CS - ' + GM_getValue('speed')+' Seconds' // CS = current setSpeed
     });
     speed_sub.addEventListener("click", function() {
-        if (!(speed <= 10)) { speed -= 10;GM_setValue("speed", speed)}
-        else{speed = 10; GM_setValue("speed", speed);}
-        dis.innerHTML = 'CS - ' + GM_getValue('speed')
+        if (!(GM_getValue('speed')<= 0.1)) {
+            speed = parseFloat((speed-0.1).toFixed(1))
+            GM_setValue("speed",speed);}
+        dis.innerHTML = 'CS - ' + GM_getValue('speed')+' Seconds'
 
     });
     //////////////////
