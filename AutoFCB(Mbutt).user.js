@@ -4,7 +4,7 @@
     var visit = document.querySelector("#visit239 > button")
     var visitR = visit && parseInt(visit.parentElement.parentElement.getElementsByClassName('info')[0].getElementsByTagName('span')[0].innerText.replace(/\/.*/, ''))
     var button = document.createElement("button");
-    var limit = 50
+    var limit = visitR
     var reload = performance.getEntriesByType("navigation")[0].type =='reload'
     // 2. Append somewhere
     var body = document.getElementsByClassName("shortlinks")[0];;
