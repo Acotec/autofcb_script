@@ -25,12 +25,14 @@
     "undefined" != String(speed) && "NaN" != String(speed) && "null" != String(GM_getValue(speed)) || GM_setValue("speed", 0.1);
     // 1. Create the button
     var button = document.createElement("button");
+    var coin = document.createElement("button");
     var speed_add = document.createElement("button");
     var speed_sub = document.createElement("button");
     var dis = document.createElement("p");
     // 2. Append somewhere
     var body = document.getElementsByClassName('col item')[1].getElementsByClassName('content-box')[0]
     var body1 = document.getElementsByClassName('col item')[0].getElementsByClassName('content-box')[0]
+    var coinB = document.getElementsByClassName("shortlinks")[0]
     //button.innerHTML = "Run Script";
     function checkButton() {
         if (GM_getValue("_alreadyRun") == true) {
@@ -135,20 +137,21 @@
     }
 
     function DelayCoin() {
-        var dcoin = document.getElementById('visit239')[1]
+        //var dcoin = document.getElementById('visit239')[1]
+        coinB.appendChild(coin)
         try {
             if (GM_getValue("delayCoin")) {
-                dcoin.getElementsByTagName('i')[0].innerHTML = 'delay';
+                coin.innerHTML = 'Delay';
             } else {
-                dcoin.getElementsByTagName('i')[0].innerHTML = 'dnt_delay';
+                coin.innerHTML = 'Dnt_Delay';
             }
-            dcoin.addEventListener('click', function (e) {
+            coin.addEventListener('click', function (e) {
                 if (GM_getValue("delayCoin", true)) {
                     GM_setValue("delayCoin", false);
-                    dcoin.getElementsByTagName('i')[0].innerHTML = 'dnt_delay';
+                    coin.innerHTML = 'Dnt_Delay';
                 } else {
                     GM_setValue("delayCoin", true);
-                    dcoin.getElementsByTagName('i')[0].innerHTML = 'delay'
+                    coin.innerHTML = 'Delay'
                 }
                 console.log(GM_getValue("delayCoin"))
             });
