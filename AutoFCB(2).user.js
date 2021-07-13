@@ -142,8 +142,7 @@
 			} else {
 				dcoin.getElementsByTagName('i')[0].innerHTML = 'dnt_delay';
 			}
-			dcoin.addEventListener('long-press', function (e) {
-				e.preventDefault()
+			dcoin.addEventListener('click', function (e) {
 				if (GM_getValue("delayCoin", true)) {
 					GM_setValue("delayCoin", false);
 					dcoin.getElementsByTagName('i')[0].innerHTML = 'dnt_delay';
