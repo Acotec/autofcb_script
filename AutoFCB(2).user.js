@@ -143,6 +143,7 @@
             if (GM_getValue("delayCoin")) {
                 coin.innerHTML = 'Delay';
             } else {
+                GM_setValue("delayCoin", false)
                 coin.innerHTML = 'Dnt_Delay';
             }
             coin.addEventListener('click', function (e) {
@@ -233,7 +234,7 @@
             }
             clearInterval(interval); //clear
             //console.log(limit)
-            console.log('duration using is', (duration / 1000).toFixed(1))
+            console.log('duration using is', (duration / 1000).toFixed(2))
             if (limit != 0) {
                 appear(); //re-run
             } else {
