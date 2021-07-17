@@ -18,8 +18,6 @@
     }
 
     function Suggest(){
-        document.querySelector("#adcopy_response").setAttribute('autocomplete','on')
-        document.querySelector("#adcopy_response").setAttribute('autocorrect','on')
         document.body.addEventListener('keydown', function handler(event) {
             if (event.target.id.indexOf('adcopy_response') == 0) {
                 this.removeEventListener(event.type, handler);
@@ -29,8 +27,14 @@
                 input.focus();
             }
         })}
+    function setFocusToTextBox(){
+        var textbox = document.querySelector("#adcopy_response");
+        textbox.focus();
+        textbox.scrollIntoView();
+    }
     waitForKeyElements('#adcopy-puzzle-image', (element) => {
         Suggest()
+        setFocusToTextBox()
     },true,);
 
 })();
