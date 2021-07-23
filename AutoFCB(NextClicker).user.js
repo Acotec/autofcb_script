@@ -3,7 +3,7 @@
     if(/dogemate.com|faupto.com/gi.test(href)){$("#bdt").click()}
     else if (/theblogcash/gi.test(href)){document.getElementsByClassName("btn btn-info text-white btn-lg next-button")[0].click()}
     else if (/orangeptc/gi.test(href)){setTimeout( ()=>{document.querySelector("input").click()},4002)}
-    else if (/prolinks.xyz|linkdesh.xyz|bitsfree.xyz|dgbauto|cryptofans|phoenixfaucets/gi.test(href)){setInterval(()=>{document.querySelector("#mdt").click()},1000)}
+    else if (/prolinks.xyz|linkdesh.xyz|bitsfree.xyz|dgbauto|cryptofans|phoenixfaucets/gi.test(href)){waitForKeyElements('#mdt',(e)=>{e.click()},true,0)}
     else if(/step/gi.test(href)){document.querySelector("#main-button").disabled=false;setTimeout(()=>{document.querySelector("#main-button").click()},100)}
     else if(/shortzzy.in/gi.test(href)){setInterval( () => {document.querySelector("#btn6").click()},1000)}
     else if(/yoshare.net/gi.test(href)){setTimeout(()=>{ try{document.querySelector("#yuidea > input.yu-btn.yu-blue").click()}catch(err){document.querySelector("#btn6").click()}},1000)}
