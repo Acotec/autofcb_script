@@ -23,19 +23,28 @@
         }
         Cryptocurrency[2].value = 'harfho77@gmail.com'
         Cryptocurrency[2].dispatchEvent(new Event('change'));
+        waitForKeyElements(".alert-info", (element) => {
+            let msg = element.innerText
+            if(/Your transfer has been successfully completed/gi.test(msg)){
+                location = 'https://faucetpay.io/page/user-admin'
+            }
+        },true,100);
+
     };
     if(/user-admin/gi.test(window.location.href)){
         var payouttoday = parseInt(document.querySelector(".media.mg-t-20.mg-sm-t-0.mg-sm-l-15.mg-md-l-40 > div.media-body").innerText.replace(/[^\d].*\n/,''))
-        if(payouttoday>=3){
-            waitForKeyElements(".crypto", (element) => {
-                if(element){
-                    GM_setValue(element.innerText.match(/.*\n/gi)[0].replace(/\n/,'').toLowerCase(),element.innerText.replace(/^.*\n/gi,''))
-                }
-            },false,100,1);
+        waitForKeyElements(".crypto", (element) => {
+            if(element){
+                GM_setValue(element.innerText.match(/.*\n/gi)[0].replace(/\n/,'').toLowerCase(),element.innerText.replace(/^.*\n/gi,''))
+            }
+        },false,100,1);
 
-            location = 'https://faucetpay.io/transfer'
-        }else{
-            alert('You have not withdraw from all the faucet sites')
+        //location = 'https://faucetpay.io/transfer'
+        if(!(payouttoday>=3)){
+            alert('You have not withdraw from all the faucet sites Today')
         }
-    }    
+        else{
+            location = 'https://faucetpay.io/transfer'
+        }
+    }
 })();
