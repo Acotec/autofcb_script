@@ -199,7 +199,7 @@
                         limit++
                         //console.log('wont ',limit)
                     } else {
-                        console.log(linkName)
+                        //console.log(linkName)
                         i++; //increment the index
                         if (/^coin$/.test(linkName.toLowerCase()) && GM_getValue("delayCoin")) {
                             duration = 10 * 1000
@@ -234,7 +234,7 @@
             }
             clearInterval(interval); //clear
             //console.log(limit)
-            console.log('duration using is', (duration / 1000).toFixed(2))
+            //console.log('duration using is', (duration / 1000).toFixed(2))
             if (limit != 0) {
                 appear(); //re-run
             } else {
@@ -264,9 +264,9 @@
         checkButton()
     });
     //////////////////
-    window.onload = () => {
+    //window.onload = () => {
         pageR()
-    };
+    //};
     reloadP()
     if (!_alreadyRun) {
         main()
