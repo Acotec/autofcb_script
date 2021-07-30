@@ -74,6 +74,11 @@
         } else if(/\/\/.*\/coinsurl\/(.*)/ig.test(url)){
             path = h.pathname.replace(/\/coinsurl\//,'')
             return 'coinsurl.com/'+path
+        } else if(/\/\/.*\/short\/(.*)/ig.test(url)){
+            path = h.pathname.replace(/\/short\//,'')
+            return 'short.clickscoin.com/'+path
+        } else if(/crazyblog.in\/\?postid=/ig.test(url)){
+            window.location = h.search.replace(/.*=/,'')
         }
 
         //---------------------------------------------------------------------------//
