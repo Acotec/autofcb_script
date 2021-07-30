@@ -74,10 +74,12 @@
         } else if(/\/\/.*\/coinsurl\/(.*)/ig.test(url)){
             path = h.pathname.replace(/\/coinsurl\//,'')
             return 'coinsurl.com/'+path
-        } else if(/\/\/.*\/short\/(.*)/ig.test(url)){
+        } else if(/click.*\/short\/(.*)/ig.test(url)){
             path = h.pathname.replace(/\/short\//,'')
             return 'short.clickscoin.com/'+path
-        } else if(/crazyblog.in\/\?postid=/ig.test(url)){
+        } else if(/sl.mcmfaucets.*\/short\/(.*)/ig.test(url)){
+            return 'mcmcryptos.xyz/'+h.pathname
+        }else if(/crazyblog.in\/\?postid=/ig.test(url)){
             window.location = h.search.replace(/.*=/,'')
         }
 
