@@ -10,7 +10,7 @@
     else if(/zegtrends/gi.test(href)){ try{javascript:document.getElementById('cln').submit()}catch(err){btn()}}
     else if(/techmodygi.io|ez4mods.com/gi.test(href)){ setInterval(()=>{yuidea1()},2000)}
     else if(/ez4short.com/gi.test(href)){window.onload=(e)=>{e.preventDefault;window.stop() }}
-    else if(/forex-gold.net|4orex4.com/gi.test(href)){waitForKeyElements('a[href*="health"',(e)=>{ window.location=e.getAttribute('href')},true,0)}
+    else if(/forex-gold.net|4orex4.com|mobi2c.com/gi.test(href)){waitForKeyElements('a[href*="health"]',(e)=>{ window.location=e.getAttribute('href')},true,0)}
     else if(/healthy4pepole.com/gi.test(href)){scrollToForm();waitForKeyElements('.s-btn-f',(e)=>{ window.location=e.getAttribute('href')},true,0)
                                             }
 })();
