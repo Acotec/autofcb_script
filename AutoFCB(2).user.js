@@ -268,10 +268,8 @@
     button.addEventListener("click", function () {
         checkButton()
     });
-    //////////////////
-    //window.onload = () => {
     pageR()
-    //};
+    button.innerHTML = "Script Not Running -- SHORTLINKS=" + _views_ToVisit.length;
     reloadP()
     if (!_alreadyRun) {
         main()
