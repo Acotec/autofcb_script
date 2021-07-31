@@ -48,7 +48,7 @@
             sessionStorage.removeItem("close")
             //console.log("GM_value set to-" + GM_getValue("_alreadyRun"))
         } else {
-            GM_setValue("_alreadyRun", false);
+            GM_setValue("_alreadyRun", true);
             button.innerHTML = "Script Stop";
             sessionStorage.removeItem("close")
             //console.log("GM_value set to-" + GM_getValue("_alreadyRun"))
