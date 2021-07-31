@@ -39,11 +39,14 @@
             GM_setValue("_alreadyRun", false);
             //button.innerHTML = "Run Script";
             button.innerHTML = "Script Run [" + _totalLink + "] Links will Open";
+            sessionStorage.removeItem("close")
             location.reload()
+            sessionStorage.removeItem("close")
             //console.log("GM_value set to-" + GM_getValue("_alreadyRun"))
         } else {
             GM_setValue("_alreadyRun", false);
             button.innerHTML = "Script Stop";
+            sessionStorage.removeItem("close")
             //console.log("GM_value set to-" + GM_getValue("_alreadyRun"))
         };
     }
@@ -55,6 +58,7 @@
             sessionStorage.removeItem("reloading");
             if (_alreadyRun == false) {
                 button.innerHTML = "Script Run(Click to Run Again)";
+                sessionStorage.setItem("close", "true") //AutoFCB(Close)
             } else {
                 button.innerHTML = "Script Not Running -- SHORTLINKS=" + _views_ToVisit.length;
             }
@@ -197,7 +201,7 @@
                     if (DontOpen_LinkByName(open_link)) {
                         //console.log('Shortlink Among Dont Open')
                         limit++
-                        //console.log('wont ',limit)
+                        //console.log('wont open',linkName,limit)
                     } else {
                         //console.log(linkName)
                         i++; //increment the index
@@ -238,6 +242,7 @@
             if (limit != 0) {
                 appear(); //re-run
             } else {
+                button.innerHTML = 'Done opening-Click to Run Again'
                 i = 0; //reset
                 //console.log('Done opening')
                 button.innerHTML = 'Done opening-Click to Run Again'
@@ -265,7 +270,7 @@
     });
     //////////////////
     //window.onload = () => {
-        pageR()
+    pageR()
     //};
     reloadP()
     if (!_alreadyRun) {
