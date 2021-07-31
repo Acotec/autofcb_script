@@ -43,11 +43,14 @@
             GM_setValue("_alreadyRun", false);
             //button.innerHTML = "Run Script";
             button.innerHTML = "Script Run [" + _totalLink + "] Links will Open";
+            sessionStorage.removeItem("close")
             location.reload()
+            sessionStorage.removeItem("close")
             //console.log("GM_value set to-" + GM_getValue("_alreadyRun"))
         } else {
             GM_setValue("_alreadyRun", false);
             button.innerHTML = "Script Stop";
+            sessionStorage.removeItem("close")
             //console.log("GM_value set to-" + GM_getValue("_alreadyRun"))
         };
     }
@@ -59,8 +62,9 @@
             sessionStorage.removeItem("reloading");
             if (_alreadyRun == false) {
                 button.innerHTML = "Script Run(Click to Run Again)";
+                sessionStorage.setItem("close", "true") //AutoFCB(Close)
             } else {
-                button.innerHTML = "Script Not Running--Total Button=" + _views_ToVisit.length;
+                button.innerHTML = "Script Not Running -- SHORTLINKS=" + _views_ToVisit.length;
             }
         }
     }
