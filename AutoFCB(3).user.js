@@ -272,10 +272,8 @@
             dis1.innerHTML = 'CS - ' + GM_getValue('S_speed') + ' Seconds'
         }
     });
-    //////////////////
-    window.onload = function () {
-        pageR()
-    }
+    pageR()
+    button.innerHTML = "Script Not Running -- SHORTLINKS=" + _views_ToVisit.length;
     reloadP();
     if (!_alreadyRun) {
         main()
