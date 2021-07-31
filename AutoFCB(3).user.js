@@ -276,6 +276,7 @@
     button.innerHTML = "Script Not Running -- SHORTLINKS=" + _views_ToVisit.length;
     reloadP();
     if (!_alreadyRun) {
+        button.innerHTML = "Script Run(Click to Run Again)";
         main()
     }
 })();
