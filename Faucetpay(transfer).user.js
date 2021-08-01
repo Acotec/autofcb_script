@@ -26,6 +26,7 @@
         waitForKeyElements(".alert-info", (element) => {
             let msg = element.innerText
             if(/Your transfer has been successfully completed/gi.test(msg)){
+                var transfer = GM_setValue('transfer',true)
                 location = 'https://faucetpay.io/page/user-admin'
             }
         },true,100);
@@ -43,8 +44,9 @@
         if(!(payouttoday>=3)){
             alert('You have not withdraw from all the faucet sites Today')
         }
-        else{
+        else if(!GM_getValue('transfer') && !/transfer/gi.test(document.referrer)){
             location = 'https://faucetpay.io/transfer'
-        }
+            //GM_setValue('transfer',false)
+        }else{GM_setValue('transfer',false)}
     }
 })();
