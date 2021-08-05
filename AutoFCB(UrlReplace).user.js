@@ -29,9 +29,6 @@
             m.name = 'referrer';
             m.content = 'origin';
             document.head.appendChild(m);
-            //const a = document.createElement('a');
-            // a.href = 'https://linksly.co/' + path;
-            // a.click();
             return ('linksly.co/'+ path)
         } else if(/mixespecialidades.live|tecnoinfo.xyz/.test(url) && h.pathname === '/check/' && /^\?([^&]+)/.test(h.search)){
             window.stop();setTimeout(()=>{location.reload()},60000)
@@ -41,9 +38,6 @@
             m.name = 'referrer';
             m.content = 'origin';
             document.head.appendChild(m);
-            //const a = document.createElement('a');
-            // a.href = 'https://linksly.co/' + path;
-            // a.click();
             location=path
         } else if(/cekip.site/.test(url) && /^\/go\/([^\/]+)/.test(h.pathname)){
             path = atob(h.pathname).slice(3)
@@ -52,12 +46,20 @@
                 m.name = 'referrer';
                 m.content = 'origin';
                 document.head.appendChild(m);
-                //const a = document.createElement('a');
-                // a.href = atob(RegExp.$1);
-                // a.click();
                 location=path
             } catch(e) {}
 
+        } else if (/l.techpedi.com/.test(url)){
+            if (h.pathname === '/verify/') {
+                path = h.search.replace(/\?/,'')
+                const m = document.createElement('meta');
+                m.name = 'referrer';
+                m.content = 'origin';
+                document.head.appendChild(m);
+                const a = document.createElement('a');
+                location='https://onewebify.com/' + path;
+
+            }
         } else if(url.includes('crazyblog.in')){
             if(h.pathname.includes('demo')){
                 path = h.pathname.replace(/.*\//,'')
@@ -78,7 +80,7 @@
             path = h.pathname.replace(/\/short\//,'')
             return 'short.clickscoin.com/'+path
         } else if(/sl.mcmfaucets.*\/short\/(.*)/ig.test(url)){
-            return 'mcmcryptos.xyz'+h.pathname
+            return 'mcmcryptos.xyz/'+h.pathname
         } else if(/crazyblog.in\/\?postid=/ig.test(url)){
             window.location = h.search.replace(/.*=/,'')
         }
