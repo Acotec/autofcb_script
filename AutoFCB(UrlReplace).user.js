@@ -3,6 +3,7 @@
     var path = null
     var l = ((h) => {
         let url = window.location.href
+        //------------Replace$Redirect--------------------------------------------------------//
         if (url.includes('adsy.pw') && h.searchParams.has('url')) {
             return (h.searchParams.get('url'))
         } else if (url.includes('gainprofitblog1.freesats.xyz')) {
@@ -22,7 +23,32 @@
         } else if(url.includes('faucet.100count.net')){
             path = url.replace(/.*faucet./,'')
             return (path)
-        } else if(url.includes('themezon.net')){
+        } else if(url.includes('crazyblog.in')){
+            if(h.pathname.includes('demo')){
+                path = h.pathname.replace(/.*\//,'')
+                return ('wplink.online/'+path)
+            }if(h.pathname.includes('wpblog')){
+                return ('wplink.online/'+ h.searchParams.get('link'))
+            }if(h.searchParams.has('link')){
+                return ('cblink.crazyblog.in' + h.searchParams.get('link'))
+            }
+        } else if(url.includes('amazingdarpon.com')&& h.searchParams.has('link')){
+            return 'go.zolomix.in/' + h.searchParams.get('link');
+        } else if(url.includes('kiralikarazi.com')){
+            return 'go.mof.pw/' + h.searchParams.get('link');
+        } else if(/\/\/.*\/coinsurl\/(.*)/ig.test(url)){
+            path = h.pathname.replace(/\/coinsurl\//,'')
+            return 'coinsurl.com/'+path
+        } else if(/clickscoin.*\/short\/(.*)/ig.test(url)){
+            path = h.pathname.replace(/\/short\//,'')
+            return 'short.clickscoin.com/'+path
+        } else if(/sl.mcmfaucets.*\/short\/(.*)/ig.test(url)){
+            return 'mcmcryptos.xyz/'+h.pathname
+        } else if(/crazyblog.in\/\?postid=/ig.test(url)){
+            window.location = h.search.replace(/.*=/,'')
+        }
+        //-----------------meta-----------------------------------------------------//
+        else if(url.includes('themezon.net')){
             path = h.search.replace(/\?/,'')
             // return ('linksly.co/'+path)
             const m = document.createElement('meta');
@@ -50,6 +76,8 @@
             } catch(e) {}
 
         } else if (/l.techpedi.com/.test(url)){
+            path = h.search.replace(/\?/,'')
+            return 'https://onewebify.com/' + path+"/===";
             if (h.pathname === '/verify/') {
                 path = h.search.replace(/\?/,'')
                 const m = document.createElement('meta');
@@ -57,34 +85,18 @@
                 m.content = 'origin';
                 document.head.appendChild(m);
                 const a = document.createElement('a');
-                location='https://onewebify.com/' + path;
+                location='https://onewebify.com/' + path+"/=";
 
             }
-        } else if(url.includes('crazyblog.in')){
-            if(h.pathname.includes('demo')){
-                path = h.pathname.replace(/.*\//,'')
-                return ('wplink.online/'+path)
-            }if(h.pathname.includes('wpblog')){
-                return ('wplink.online/'+ h.searchParams.get('link'))
-            }if(h.searchParams.has('link')){
-                return ('cblink.crazyblog.in' + h.searchParams.get('link'))
-            }
-        } else if(url.includes('amazingdarpon.com')&& h.searchParams.has('link')){
-            return 'go.zolomix.in/' + h.searchParams.get('link');
-        } else if(url.includes('kiralikarazi.com')){
-            return 'go.mof.pw/' + h.searchParams.get('link');
-        } else if(/\/\/.*\/coinsurl\/(.*)/ig.test(url)){
-            path = h.pathname.replace(/\/coinsurl\//,'')
-            return 'coinsurl.com/'+path
-        } else if(/clickscoin.*\/short\/(.*)/ig.test(url)){
-            path = h.pathname.replace(/\/short\//,'')
-            return 'short.clickscoin.com/'+path
-        } else if(/sl.mcmfaucets.*\/short\/(.*)/ig.test(url)){
-            return 'mcmcryptos.xyz/'+h.pathname
-        } else if(/crazyblog.in\/\?postid=/ig.test(url)){
-            window.location = h.search.replace(/.*=/,'')
         }
-
+        //----------------------BASE64----------------------------------------------------//
+        else if(/forex-gold.net/.test(url)){
+            var path = location.search.replace(/.*&k=/,'').replace(/&.*/,'')
+            var v =Base64.decode(path).replace(/.*&k=/,'').replace(/\/.*|&.*/,'')
+            var l =Base64.decode(v)
+            location =l+'/==='
+        }
+       
         //---------------------------------------------------------------------------//
         else if(url.includes('mgnet.xyz')||url.includes('1bit.space')){
             waitForKeyElements('.button-element-verification',(e)=>{
@@ -100,8 +112,10 @@
                 window.location=atob(tokenURL)
             })
         }
+        
     })(new URL(window.location.href))
-    //---------------------------------------------------------------------------------//
+
+    //----------------------------------------------------------------------------------//
     if (l) {
         window.location.replace(new URL('https://' + l.replace(/https:\/\//,'')));
     }
