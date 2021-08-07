@@ -2,7 +2,7 @@
     var key=atob(JSON.parse(GM_getResourceText('key')))
     if(/\/===$/.test(window.location.href)){
         const baseUrl = 'https://api.yuumari.com/alpha-bypass/';
-        const link = window.location.href.replace(/\/===/,'');
+        const link = window.location.href.replaceAll(/\/===/ig,'');
         const u = key;
         const l = link
         fetch(baseUrl, {
@@ -13,7 +13,7 @@
             if(!d.message){
                 location=d.result
             }else{
-                alert(d.message)
+                alert('Bypass -- '+ (l) +' -- '+ d.message)
             }
-        });}
-})();
+        });
+    }
