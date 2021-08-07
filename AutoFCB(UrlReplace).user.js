@@ -51,7 +51,7 @@
             }
         }
         //----------------------BASE64----------------------------------------------------//
-        else if(/forex-gold.net/.test(url)){
+        else if(/forex-gold.net\/\?p/.test(url)){
             var path = location.search.replace(/.*&k=/,'').replace(/&.*/,'')
             var v =Base64.decode(path).replace(/.*&k=/,'').replace(/\/.*|&.*/,'')
             var l =Base64.decode(v)
