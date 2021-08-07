@@ -2,7 +2,7 @@
     var key=atob(JSON.parse(GM_getResourceText('key')))
     if(/\/===$/.test(window.location.href)){
         const baseUrl = 'https://api.yuumari.com/alpha-bypass/';
-        const link = window.location.href.replaceAll(/\/===/ig,'');
+        const link = window.location.href.replace(/\/===/ig,'');
         const u = key;
         const l = link
         fetch(baseUrl, {
