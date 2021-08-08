@@ -51,11 +51,18 @@
             }
         }
         //----------------------BASE64----------------------------------------------------//
-        else if(/forex-gold.net\/\?p/.test(url)){
-            var path = location.search.replace(/.*&k=/,'').replace(/&.*/,'')
-            var v =Base64.decode(path).replace(/.*&k=/,'').replace(/\/.*|&.*/,'')
-            var l =Base64.decode(v)
-            location =l+'/==='
+       else if(/forex-gold.net\/\?p|healthy4pepole.com\/?p/.test(url)){
+            var v,path,l;
+            if(/forex-gold.net/.test(url)){
+                path = location.search.replace(/.*&k=/,'').replace(/&.*/,'');
+                v =Base64.atob(path).replace(/.*&k=/,'').replace(/\/.*|&.*/,'');
+                l =Base64.atob(v);
+                location =l+'/==='
+            }else{
+                path = location.search.replace(/.*&k=/,'').replace(/&.*|vP2Q9.+/,'')
+                v = Base64.atob(path)
+                location=v+'/==='
+            }
         }
         //---------------------------------------------------------------------------//
         else if(url.includes('mgnet.xyz')||url.includes('1bit.space')){
