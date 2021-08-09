@@ -51,18 +51,22 @@
             }
         }
         //----------------------BASE64----------------------------------------------------//
-       else if(/forex-gold.net\/\?p|healthy4pepole.com\/?p/.test(url)){
+        else if(/forex-gold.net\/\?p|healthy4pepole.com\/?p/.test(url)){
             var v,path,l;
             if(/forex-gold.net/.test(url)){
-                path = location.search.replace(/.*&k=/,'').replace(/&.*/,'');
+                path =h.search.replace(/.*&k=/,'').replace(/&.*/,'');
                 v =Base64.atob(path).replace(/.*&k=/,'').replace(/\/.*|&.*/,'');
                 l =Base64.atob(v);
                 location =l+'/==='
             }else{
-                path = location.search.replace(/.*&k=/,'').replace(/&.*|vP2Q9.+/,'')
+                path = h.search.replace(/.*&k=/,'').replace(/&.*|vP2Q9.+/,'')
                 v = Base64.atob(path)
                 location=v+'/==='
             }
+        }
+        else if(/palpodcast.site\/\?/.test(url)){
+            path=h.search.replace(/P3V0bV9zb3VyY.*/,'')
+            location=Base64.atob(path)+'/==='
         }
         //---------------------------------------------------------------------------//
         else if(url.includes('mgnet.xyz')||url.includes('1bit.space')){
