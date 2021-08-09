@@ -22,7 +22,7 @@
         else if(/clickscoin.*\/short\/(.*)/ig.test(url)){path = h.pathname.replace(/\/short\//,'');return 'short.clickscoin.com/'+path}
         else if(/sl.mcmfaucets.*\/short\/(.*)/ig.test(url)){return 'mcmcryptos.xyz/'+h.pathname}
         else if(/crazyblog.in\/\?postid=/ig.test(url)){window.location = h.search.replace(/.*=/,'')}
-        else if(/dutchycorp.+\/.+\/.*/.test(url)){window.onload=window.stop()}
+        else if(/dutchycorp.+\/.+\/.*/.test(url)){setTimeout(()=>{location.reload()},40*1000);window.onload=window.stop()}
         //-----------------meta-----------------------------------------------------//
         else if(url.includes('themezon.net')){
             path = h.search.replace(/\?/,'')
@@ -65,6 +65,7 @@
             }
         }
         else if(/palpodcast.site\/\?/.test(url)){
+            setTimeout(()=>{location.reload()},1000)
             path=h.search.replace(/P3V0bV9zb3VyY.*/,'')
             location=Base64.atob(path)+'/==='
         }
