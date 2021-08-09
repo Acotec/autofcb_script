@@ -33,7 +33,8 @@
 
     };
     if(/user-admin/gi.test(window.location.href)){
-        var payouttoday = parseInt(document.querySelector(".media.mg-t-20.mg-sm-t-0.mg-sm-l-15.mg-md-l-40 > div.media-body").innerText.replace(/[^\d].*\n/,''))
+        var payouttoday = parseInt(document.getElementsByClassName('tx-20 tx-sm-18 tx-md-24 tx-normal tx-rubik mg-b-0')[2].innerText)
+        var wallet_balance = parseFloat(document.getElementsByClassName('tx-20 tx-sm-18 tx-md-24 tx-normal tx-rubik mg-b-0')[1].innerText.replace(/\$/,''))
         waitForKeyElements(".crypto", (element) => {
             if(element){
                 GM_setValue(element.innerText.match(/.*\n/gi)[0].replace(/\n/,'').toLowerCase(),element.innerText.replace(/^.*\n/gi,''))
@@ -41,10 +42,10 @@
         },false,100,1);
 
         //location = 'https://faucetpay.io/transfer'
-        if(!(payouttoday>=3)){
+        if((!payouttoday>=3)||wallet_balance>0 ){
             alert('You have not withdraw from all the faucet sites Today')
         }
-        else if(!GM_getValue('transfer') && !/transfer/gi.test(document.referrer)){
+        else if((!GM_getValue('transfer')) && (!/transfer/gi.test(document.referrer))){
             location = 'https://faucetpay.io/transfer'
             //GM_setValue('transfer',false)
         }else{GM_setValue('transfer',false)}
