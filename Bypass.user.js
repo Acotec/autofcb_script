@@ -1,10 +1,8 @@
 (function() {
-    var key=atob(JSON.parse(GM_getResourceText('key')))
-    if(/\/===$/.test(window.location.href)){
+    function bypass(l){
+        const key=atob(JSON.parse(GM_getResourceText('key')))
         const baseUrl = 'https://api.yuumari.com/alpha-bypass/';
-        const link = window.location.href.replace(/\/===/ig,'');
         const u = key;
-        const l = link
         fetch(baseUrl, {
             method: 'POST',
             body: new URLSearchParams({u,l})
@@ -16,5 +14,13 @@
                 alert('Bypass -- '+ (l) +' -- '+ d.message)
             }
         });
+    }
+    if(/\/===$/.test(window.location.href)){
+        if(/example.com/.test(window.location.href)){
+            const link=window.location.pathname.replace(/.*bypass=/,'').replace(/\/===/ig,'');
+            bypass(link)
+        }else{
+            const link = window.location.href.replace(/\/===/ig,'');
+            bypass(link)}
     }
 })();
