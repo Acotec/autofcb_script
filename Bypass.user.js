@@ -18,6 +18,7 @@
     if(/\/===$/.test(window.location.href)){
         if(/example.com/.test(window.location.href)){
             const link=window.location.pathname.replace(/.*bypass=/,'').replace(/\/===/ig,'');
+             document.title =link;
             bypass(link)
         }else{
             const link = window.location.href.replace(/\/===/ig,'');
