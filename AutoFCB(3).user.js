@@ -1,12 +1,6 @@
 (function () {
     'use strict';
-    var getDontOpenList = [];
-    for (let e of GM_getResourceText("_DontOpen").split(",")) getDontOpenList.push(e);
-    const _DontOpen = [];
-    for (let e of getDontOpenList) {
-        let n = e.replace(/\W/gi, "");
-        _DontOpen.includes(n) || _DontOpen.push(n)
-    }
+    const _DontOpen =JSON.parse(GM_getResourceText("_DontOpen").replace(/'/ig,'"'));
     var _open_link_fast = []
     var _alreadyRun = GM_getValue("_alreadyRun")
     var _available_link = parseInt(document.getElementsByClassName('amount')[1].textContent)
