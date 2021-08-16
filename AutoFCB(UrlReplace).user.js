@@ -22,7 +22,7 @@
         else if(/clickscoin.*\/short\/(.*)/ig.test(url)){path = h.pathname.replace(/\/short\//,'');return 'short.clickscoin.com/'+path}
         else if(/sl.mcmfaucets.*\/short\/(.*)/ig.test(url)){return 'mcmcryptos.xyz/'+h.pathname}
         else if(/crazyblog.in\/\?postid=/ig.test(url)){window.location = h.search.replace(/.*=/,'')}
-        else if(/dutchycorp.+\/.+\/.*/.test(url)){setTimeout(()=>{location.reload()},40*1000);window.onload=window.stop()}
+        else if(/dutchycorp.+\/.+\/.*/.test(url)){}
         //-----------------meta-----------------------------------------------------//
         else if(url.includes('themezon.net')){
             path = h.search.replace(/\?/,'')
@@ -51,24 +51,7 @@
             }
         }
         //----------------------BASE64----------------------------------------------------//
-        else if(/forex-gold.net\/\?p|healthy4pepole.com\/?p/.test(url)){
-            var v,path,l;
-            if(/forex-gold.net/.test(url)){
-                path =h.search.replace(/.*&k=/,'').replace(/&.*/,'');
-                v =Base64.atob(path).replace(/.*&k=/,'').replace(/\/.*|&.*/,'');
-                l =Base64.atob(v);
-                location =l+'/==='
-            }else{
-                path = h.search.replace(/.*&k=/,'').replace(/&.*|vP2Q9.+/,'')
-                v = Base64.atob(path)
-                location=v+'/==='
-            }
-        }
-        else if(/palpodcast.site\/\?/.test(url)){
-            setTimeout(()=>{location.reload()},1000)
-            path=h.search.replace(/P3V0bV9zb3VyY.*/,'')
-            location=Base64.atob(path)+'/==='
-        }
+     
         //---------------------------------------------------------------------------//
         else if(url.includes('mgnet.xyz')||url.includes('1bit.space')){
             waitForKeyElements('.button-element-verification',(e)=>{
