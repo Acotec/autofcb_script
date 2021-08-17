@@ -22,7 +22,7 @@
         else if(/clickscoin.*\/short\/(.*)/ig.test(url)){path = h.pathname.replace(/\/short\//,'');return 'short.clickscoin.com/'+path}
         else if(/sl.mcmfaucets.*\/short\/(.*)/ig.test(url)){return 'mcmcryptos.xyz/'+h.pathname}
         else if(/crazyblog.in\/\?postid=/ig.test(url)){window.location = h.search.replace(/.*=/,'')}
-        else if(/dutchycorp.+\/.+\/.*/.test(url)){}
+        else if(/dutchycorp.+\/.+\/.*/.test(url)){setTimeout(()=>{window.stop()},2500)}
         //-----------------meta-----------------------------------------------------//
         else if(url.includes('themezon.net')){
             path = h.search.replace(/\?/,'')
