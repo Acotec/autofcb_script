@@ -1,10 +1,8 @@
 (function() {
     'use strict';
-    // Your code here...
     var element, error1052, alreadyVisit, success, referrer;
-    var default_host =['express-cut.ovh', 'bitlinks.pw', 'neonlink.net', 'faucet.100count.net', 'bitcoinly.in',
-                       'kiiw.icu', 'adbull.me', 'owllink.net', 'pingit.im', 'cashurl.in',
-                       'adshort.co', 'aii.sh', 'riful.com','fc-lc','coinfly.io']
+    var default_host =JSON.parse(GM_getResourceText("delaypage").replace(/'/ig,'"'));
+    console.log(default_host)
     var newDelay =[]
     var delayOn = GM_SuperValue.get('delayOn', default_host)
     var host = window.location.host.toLowerCase().replace(/https:\/\/|www\.|\[^.*]|\/.*/ig, '')
