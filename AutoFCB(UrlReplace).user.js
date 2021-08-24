@@ -23,6 +23,8 @@
         else if(/clickscoin.*\/short\/(.*)/ig.test(url)){path = h.pathname.replace(/\/short\//,'');return 'short.clickscoin.com/'+path}
         else if(/sl.mcmfaucets.*\/short\/(.*)/ig.test(url)){return 'mcmcryptos.xyz/'+h.pathname}
         else if(/crazyblog.in\/\?postid=/ig.test(url)){window.location = h.search.replace(/.*=/,'')}
+        else if(/11bit.co.in/.test(url)){window.location='http:/'+h.pathname.replace(/bitshort/,'bitshort.co')}
+        else if(/trxking.xyz\/bonus/.test(url)){window.location='http:/'+h.pathname.replace(/\/bonus/,'shrinkpay.crazyblog.in/')}
         //-----------------meta-----------------------------------------------------//
         else if(url.includes('themezon.net')){
             path = h.search.replace(/\?/,'')
@@ -51,7 +53,7 @@
             }
         }
         //----------------------BASE64----------------------------------------------------//
-     
+
         //---------------------------------------------------------------------------//
         else if(url.includes('mgnet.xyz')||url.includes('1bit.space')){
             waitForKeyElements('.button-element-verification',(e)=>{
