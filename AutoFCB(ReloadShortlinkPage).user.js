@@ -6,7 +6,7 @@
         if(sessionStorage.getItem('tryagain')==null){sessionStorage.setItem('tryagain',1);tryagain=sessionStorage.getItem('tryagain')}
         if(parseInt(tryagain)<=4){
             sessionStorage.setItem('tryagain',parseInt(tryagain)+1);
-            GM_addElement(document.getElementsByTagName('head')[0], 'meta', {'http-equiv':"refresh",'content':"180000;url="+window.location.href,});}
+            GM_addElement(document.getElementsByTagName('head')[0], 'meta', {'http-equiv':"refresh",'content':"180;url="+window.location.href,});} //content-in-seconds
         else{
             sessionStorage.removeItem('tryagain')
             //console.log('reset')
@@ -21,7 +21,6 @@
     }
     var autofcb = /auto(faucet|claim|bitco).(in|org)/ig.test(window.location.href)
     if(!autofcb){
-        //sessionStorage.setItem('page',window.location.url)
         refresh()
     }
 })();
