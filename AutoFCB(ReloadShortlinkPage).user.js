@@ -10,16 +10,18 @@
         else{
             sessionStorage.removeItem('tryagain')
             //console.log('reset')
-            GM_notification({text:window.location.href+' Reloaded 4 times and close',
-                             title:window.location.host,
-                             timeout:300*1000,
-                             ondone:()=>{window.close()},
-                             onclick:()=>{window.open(window.location.href);window.close()}
-                            });
-            setTimeout(()=>{window.close()},300*1000)
+            GM_notification({
+                title:window.location.host,
+                text:window.location.href+'Reloaded 4time and close',
+                timeout:300*1000,
+                ondone:()=>{window.close()},
+                onclick:()=>{window.open(window.location.href);window.close()}
+            });
+            GM_setClipboard(window.location.href,{type:'text/plain'})//data,info
+            window.close()
         }
     }
-    var autofcb = /auto(faucet|claim|bitco).(in|org)/ig.test(window.location.href)
+    var autofcb = /auto(faucet|claim|bitco).(in|org).*/ig.test(window.location.href)
     if(!autofcb){
         refresh()
     }
