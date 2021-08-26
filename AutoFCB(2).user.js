@@ -22,6 +22,7 @@
     var coin = document.createElement("button");
     var speed_add = document.createElement("button");
     var speed_sub = document.createElement("button");
+    //paragraph
     var dis = document.createElement("p");
     // 2. Append somewhere
     var body = document.getElementsByClassName('col item')[1].getElementsByClassName('content-box')[0]
@@ -199,7 +200,7 @@
                     } else {
                         //console.log(linkName)
                         i++; //increment the index
-                        if (/^coin$/.test(linkName.toLowerCase()) && GM_getValue("delayCoin")) {
+                        if (/^coin$|^zololink$/ig.test(linkName.toLowerCase()) && GM_getValue("delayCoin")) {
                             duration = 10 * 1000
                         } else {
                             duration = i * GM_getValue('speed') * 1000
@@ -242,8 +243,8 @@
                 button.innerHTML = 'Done opening-Click to Run Again'
                 clearInterval(interval)
                 //Rclick()
-                //window.close()
-                //window.close()
+                window.close()
+                window.close()
             }
         }, duration);
     }
