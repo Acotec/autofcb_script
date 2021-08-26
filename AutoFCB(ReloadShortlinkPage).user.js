@@ -12,7 +12,7 @@
             //console.log('reset')
             GM_notification({
                 title:window.location.host,
-                text:window.location.href+'Reloaded 4time and close',
+                text:window.location.href+' \n--Reloaded 4time and close---',
                 timeout:300*1000,
                 ondone:()=>{window.close()},
                 onclick:()=>{window.open(window.location.href);window.close()}
