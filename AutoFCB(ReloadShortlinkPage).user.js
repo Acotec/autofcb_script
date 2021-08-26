@@ -21,7 +21,7 @@
             window.close()
         }
     }
-    var autofcb = /auto(faucet|claim|bitco).(in|org).*/ig.test(window.location.href)
+    var autofcb = /auto(faucet|claim|bitco).(in|org).+|.+\/===/ig.test(window.location.href)
     if(!autofcb){
         refresh()
     }
