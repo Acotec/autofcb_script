@@ -9,7 +9,7 @@
         }).then(r => r.json())
             .then((d)=>{
             if(!d.message){
-                GM_setValue('stop',false);
+                sessionStorage.removeItem('tryagain')
                 location=d.result
             }else{
                 let tryagain;
@@ -17,7 +17,7 @@
                 if(sessionStorage.getItem('tryagain')==null){sessionStorage.setItem('tryagain',1);tryagain=sessionStorage.getItem('tryagain')}
                 if(parseInt(tryagain)<=3){
                     sessionStorage.setItem('tryagain',parseInt(tryagain)+1);
-                    window.location.reload()}
+                    window.location.reload(true)}
                 else{
                     sessionStorage.removeItem('tryagain')
                     GM_notification({
@@ -25,7 +25,6 @@
                         text:d.message+"--"+l,
                         timeout:300*1000,
                         ondone:()=>{window.close()},
-                        onclick:()=>{null}
                     });
                     GM_setClipboard(l,{type:'text/plain'})
                     window.close()
