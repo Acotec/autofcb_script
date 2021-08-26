@@ -12,14 +12,24 @@
                 GM_setValue('stop',false);
                 location=d.result
             }else{
-                let flag = GM_getValue('stop',false)
-                let tryagain = GM_getValue('tryagain',1)
-                if(flag==false && tryagain<=3){
-                    GM_setValue('tryagain',tryagain+1);
+                let tryagain;
+                tryagain=sessionStorage.getItem('tryagain')
+                if(sessionStorage.getItem('tryagain')==null){sessionStorage.setItem('tryagain',1);tryagain=sessionStorage.getItem('tryagain')}
+                if(parseInt(tryagain)<=3){
+                    sessionStorage.setItem('tryagain',parseInt(tryagain)+1);
                     window.location.reload()}
                 else{
-                    GM_setValue('tryagain',1);GM_setValue('stop',true);
-                    alert('Bypass -- '+ (l) +' -- '+ d.message)}
+                    sessionStorage.removeItem('tryagain')
+                    GM_notification({
+                        title:'!Bypass-- '+window.location.host,
+                        text:d.message+"--"+l,
+                        timeout:300*1000,
+                        ondone:()=>{window.close()},
+                        onclick:()=>{null}
+                    });
+                    GM_setClipboard(l,{type:'text/plain'})
+                    window.close()
+                }
             }
         });
     }
