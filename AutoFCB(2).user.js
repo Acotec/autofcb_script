@@ -70,9 +70,12 @@
         if (reRun<time) {
             GM_setValue("_alreadyRun", false);
             GM_setValue("Re_run",reRun+1);//
+            sessionStorage.setItem("close", "true")
             window.close()
         } else {
             GM_setValue("Re_run",0);//
+            GM_setValue("_alreadyRun", true);
+            sessionStorage.removeItem("close")
             window.close()
         }
     }
