@@ -66,14 +66,14 @@
 
     function Re_run() {
         let reRun = Number(GM_getValue("Re_run",0))//
-        let time = 1
+        let time = 2
         if (reRun<time) {
             GM_setValue("_alreadyRun", false);
             GM_setValue("Re_run",reRun+1);//
             window.close()
         } else {
             GM_setValue("Re_run",0);//
-            //window.close()
+            window.close()
         }
     }
 
