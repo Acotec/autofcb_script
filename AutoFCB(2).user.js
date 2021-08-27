@@ -64,22 +64,16 @@
         sessionStorage.setItem("reloading", "true");
     }
 
-    function Rclick() {
-        //document.querySelector("body > div.content-area > button").click()
-        if (Number(GM_getValue("Reload")) < 1) {
-            var R = Number(GM_getValue("Reload"))
+    function Re_run() {
+        let reRun = Number(GM_getValue("Re_run",0))//
+        let time = 1
+        if (reRun<time) {
             GM_setValue("_alreadyRun", false);
-            GM_setValue("Reload", R + 1);
+            GM_setValue("Re_run",reRun+1);//
             window.close()
-            window.top.close()
-            window.location.reload()
         } else {
-            GM_setValue("_alreadyRun", true);
-            GM_setValue("Reload", 0)
-            button.innerHTML = "Auto Click Done(" + GM_getValue("Reload") + ")"
-            setInterval(() => {
-                document.querySelector("body > div.content-area > div.shortlinks > button").click()
-            }, 1000)
+            GM_setValue("Re_run",0);//
+            //window.close()
         }
     }
 
@@ -242,9 +236,8 @@
                 //console.log('Done opening')
                 button.innerHTML = 'Done opening-Click to Run Again'
                 clearInterval(interval)
-                //Rclick()
-                window.close()
-                window.close()
+                Re_run()
+               //window.close();//window.close()
             }
         }, duration);
     }
