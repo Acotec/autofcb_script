@@ -9,8 +9,11 @@
             sessionStorage.setItem('tryagain',parseInt(tryagain)+1)
         }
         else{
-            sessionStorage.removeItem('tryagain')
-            delete(sessionStorage.tryagain)
+            window.addEventListener('beforeunload', function (e) {
+                e.preventDefault();
+                sessionStorage.removeItem('tryagain');delete(sessionStorage.tryagain)
+            });
+            sessionStorage.removeItem('tryagain');delete(sessionStorage.tryagain)
             //console.log('reset')
             GM_notification({
                 title:window.location.host,
