@@ -16,7 +16,7 @@
             if(h.pathname.includes('demo')){path = h.pathname.replace(/.*\//,'');return ('wplink.online/'+path)}
             if(h.pathname.includes('wpblog')){if(h.searchParams.get('link')){return ('wplink.online/'+ h.searchParams.get('link'))}
                                               else{path=h.pathname.replace(/.*\//,'');return ('shrinkpay.crazyblog.in/'+path)}}
-            if(h.searchParams.has('link')){return ('cblink.crazyblog.in' + h.searchParams.get('link'))}}
+            if(h.searchParams.has('link')){return ('shrinkpay.crazyblog.in/' + h.searchParams.get('link'))}}
         else if(url.includes('amazingdarpon.com')&& h.searchParams.has('link')){return 'go.zolomix.in/' + h.searchParams.get('link');}
         else if(url.includes('kiralikarazi.com')){return 'go.mof.pw/' + h.searchParams.get('link');}
         else if(/\/\/.*\/coinsurl\/(.*)/ig.test(url)){path = h.pathname.replace(/\/coinsurl\//,'');return 'coinsurl.com/'+path}
