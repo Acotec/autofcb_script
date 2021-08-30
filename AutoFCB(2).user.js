@@ -177,6 +177,7 @@
     }
 
     function appear() { //define a function
+        sessionStorage.setItem("close", "true") //AutoFCB(Close) 'Allow tab to close if codes rerun without pressing - var(button) '
         let limit = _ordered_LinkToVisitOnPage.length
         // if(limit>30){limit = 30 //_available_link}; i += 1; //increment the index ; duration = i*speed ; console.log('First',duration)
         interval = setInterval(() => {
