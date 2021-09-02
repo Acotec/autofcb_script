@@ -107,7 +107,7 @@
         var duration; //for setInterval duration
 
         var _DontOpen = response.responseText.split(',').map(item => item.replace(/'/ig, '"'))
-        alert(_DontOpen)
+        //alert(_DontOpen)
         if (_views_ToVisit.length >= _DontOpen.length) {
             var _totalLink = _views_ToVisit.length - _DontOpen.length;
         } else if (_DontOpen.length >= _views_ToVisit.length) {
