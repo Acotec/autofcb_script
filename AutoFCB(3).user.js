@@ -67,22 +67,19 @@
         sessionStorage.setItem("reloading", "true");
     }
 
-    function Rclick() {
-        //document.querySelector("body > div.content-area > button").click()
-        if (Number(GM_getValue("Reload")) < 1) {
-            var R = Number(GM_getValue("Reload"))
+    function Re_run() {
+        let reRun = Number(GM_getValue("Re_run",0))//
+        let time = 2
+        if (reRun<time) {
             GM_setValue("_alreadyRun", false);
-            GM_setValue("Reload", R + 1);
+            GM_setValue("Re_run",reRun+1);//
+            sessionStorage.setItem("close", "true")
             window.close()
-            window.top.close()
-            window.location.reload()
         } else {
+            GM_setValue("Re_run",0);//
             GM_setValue("_alreadyRun", true);
-            GM_setValue("Reload", 0)
-            button.innerHTML = "Auto Click Done(" + GM_getValue("Reload") + ")"
-            setInterval(() => {
-                document.querySelector("body > div.content-area > div.shortlinks > button").click()
-            }, 1000)
+            sessionStorage.removeItem("close")
+            window.close()
         }
     }
 
@@ -266,11 +263,14 @@
             dis1.innerHTML = 'CS - ' + GM_getValue('S_speed') + ' Seconds'
         }
     });
+    //////////////////
+
     pageR()
     button.innerHTML = "Script Not Running -- SHORTLINKS=" + _views_ToVisit.length;
     reloadP();
-    if (!_alreadyRun) {
+   if (!_alreadyRun) {
         button.innerHTML = "Script Run(Click to Run Again)";
+        sessionStorage.setItem("close", "true") //AutoFCB(Close) 'Allow tab to close if codes rerun without pressing - var(button)'
         main()
     }
 })();
