@@ -1,5 +1,5 @@
 (function() {
-    'use strict';    
+    'use strict';
     var _open_link_fast = [].map(e => e.toLowerCase());
     var _alreadyRun = GM_getValue("_alreadyRun");
     var _available_link = parseInt(document.getElementsByClassName('amount')[1].textContent);
@@ -80,10 +80,11 @@
 
     //function to get the shortlinks that should not be open
     if (GM_getValue("_alreadyRun") != true) {
+        GM_setValue("_alreadyRun", true);
         GM_xmlhttpRequest({
             method: 'GET',
             url: 'https://gist.github.com/Harfho/d4805d8a56793fa59d47e464c6eec243/raw/_DontOpen.txt?timestamp=' + (+new Date()),
-            //fetch: true,
+            fetch: true,
             nocache: false,
             revalidate: true,
             onload: Runcode
@@ -107,7 +108,6 @@
         var duration; //for setInterval duration
 
         var _DontOpen = response.responseText.split(',').map(item => item.replace(/'/ig, '"'))
-        //alert(_DontOpen)
         if (_views_ToVisit.length >= _DontOpen.length) {
             var _totalLink = _views_ToVisit.length - _DontOpen.length;
         } else if (_DontOpen.length >= _views_ToVisit.length) {
@@ -270,6 +270,8 @@
         ViewsOnPage()
         Sort_And_Remove_Duplicate()
         Ordered_LinkToView()
+        SpeedCtr()
+        DelayShort()
         //console.log(_ordered_LinkToVisitOnPage);console.log(_num_ofLink_toVisit);console.log(_sort_and_Re_Dup);console.log(_order_ByName)
 
         function main() {
