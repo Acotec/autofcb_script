@@ -23,6 +23,7 @@
             GM_setValue("_alreadyRun", true);
             button.innerHTML = "Script Stop";
             sessionStorage.removeItem("close")
+            location.reload()
         };
     };
 
