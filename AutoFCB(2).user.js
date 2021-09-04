@@ -3,7 +3,7 @@
     var _open_link_fast = [].map(e => e.toLowerCase());
     var _alreadyRun = GM_getValue("_alreadyRun");
     var _available_link = parseInt(document.getElementsByClassName('amount')[1].textContent);
-    var _views_ToVisit = $('span#views').toArray();
+    var _views_ToVisit = Array.from(document.querySelectorAll('span#views'));
     var _num_ofLink_toVisit = [];
     var _sort_and_Re_Dup = [];
     var _ordered_LinkToVisitOnPage = [];
