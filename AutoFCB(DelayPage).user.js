@@ -3,9 +3,10 @@
     var delayOn =JSON.parse(GM_getResourceText("delaypage").replace(/'/ig,'"'));
     var host = window.location.host.toLowerCase().replace(/https:\/\/|www\.|\[^.*]|\/.*/ig, '')
     function sleep(e) {
-        for (var n = (new Date).getTime(); new Date < n + 1e3 * e;);
-        return 0
-    }
+        const startPoint = new Date().getTime()
+        while (new Date().getTime() - startPoint <= e*1e3){}
+        return;
+    };
     if(/adbull/.test(host)){
         var inter=setTimeout(()=>{location.reload(false)},25*1000)
         null!=sessionStorage.getItem("reloaded")||sleep(17);
