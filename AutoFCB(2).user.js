@@ -1,5 +1,7 @@
 (function() {
     'use strict';
+    var _DontOpen =JSON.parse(GM_getResourceText("_DontOpen").replace(/'/ig,'"'))//.map(e => e.toLowerCase())
+    console.log(_DontOpen)
     var _open_link_fast = [].map(e => e.toLowerCase());
     var _alreadyRun = GM_getValue("_alreadyRun");
     var _available_link = parseInt(document.getElementsByClassName('amount')[1].textContent);
@@ -10,6 +12,31 @@
     var _order_ByName = [];
     var button = document.createElement("button");
     var body = document.getElementsByClassName('col item')[1].getElementsByClassName('content-box')[0];
+
+    function AutoUpdateDontOpen(){
+        var AutoUpdateB = document.createElement("button");
+        var AutoUpdate = document.getElementsByClassName('col item')[2].getElementsByClassName('content-box')[0];
+        AutoUpdate.appendChild(AutoUpdateB);
+        try {
+            if (GM_getValue("AutoUpdate")) {
+                AutoUpdateB.innerHTML = 'AutoUpdate_ON';
+                AutoUpdateB.style="background-color:Violet;color:white"
+            } else {
+                GM_setValue("AutoUpdate", false)
+                AutoUpdateB.innerHTML = 'AutoUpdate_OFF';
+                AutoUpdateB.style="background-color:black;color:white"
+            }
+            AutoUpdateB.addEventListener('click', function(e) {
+                if (GM_getValue("AutoUpdate", true)) {
+                    GM_setValue("AutoUpdate", false);
+                    AutoUpdateB.innerHTML = 'AutoUpdate_OFF';
+                    AutoUpdateB.style="background-color:black;color:white"
+                } else {
+                    GM_setValue("AutoUpdate", true);
+                    AutoUpdateB.innerHTML = 'AutoUpdate_ON'
+                    AutoUpdateB.style="background-color:Violet;color:white"
+                }});} catch (err) {}
+    }
 
     function checkButton() {
         if (GM_getValue("_alreadyRun") == true) {
@@ -56,40 +83,46 @@
 
     function DelayShort() {
         //var dcoin = document.getElementById('visit239')[1]
-        var ShortDelay = document.createElement("button"); //create button to enable/disable the Delay of some shortlink b4 they open
-        var ShortDelayButton = document.getElementsByClassName("shortlinks")[0] //Append somewhere
-        ShortDelayButton.appendChild(ShortDelay)
+        var ShortDelayButton = document.createElement("button"); //create button to enable/disable the Delay of some shortlink b4 they open
+        var ShortDelay= document.getElementsByClassName("shortlinks")[0] //Append somewhere
+        ShortDelay.appendChild(ShortDelayButton)
         try {
             if (GM_getValue("delayShort")) {
-                ShortDelay.innerHTML = 'Delay';
+                ShortDelayButton.innerHTML = 'Delay';
             } else {
                 GM_setValue("delayShort", false)
-                ShortDelay.innerHTML = 'Dnt_Delay';
+                ShortDelayButton.innerHTML = 'Dnt_Delay';
             }
             ShortDelay.addEventListener('click', function(e) {
                 if (GM_getValue("delayShort", true)) {
                     GM_setValue("delayShort", false);
-                    ShortDelay.innerHTML = 'Dnt_Delay';
+                    ShortDelayButton.innerHTML = 'Dnt_Delay';
                 } else {
                     GM_setValue("delayShort", true);
-                    ShortDelay.innerHTML = 'Delay'
+                    ShortDelayButton.innerHTML = 'Delay'
                 }
                 //console.log(GM_getValue("delayShort"))
             });
         } catch (err) {}
     };
 
+
+    AutoUpdateDontOpen()//run 
     //function to get the shortlinks that should not be open
     if (GM_getValue("_alreadyRun") != true) {
         GM_setValue("_alreadyRun", true);
-        GM_xmlhttpRequest({
-            method: 'GET',
-            url: 'https://gist.github.com/Harfho/d4805d8a56793fa59d47e464c6eec243/raw/_DontOpen.txt?timestamp=' + (+new Date()),
-            fetch: true,
-            nocache: false,
-            revalidate: true,
-            onload: Runcode
-        })
+        if(GM_getValue("use")){
+            GM_xmlhttpRequest({
+                method: 'GET',
+                url: 'https://gist.github.com/Harfho/d4805d8a56793fa59d47e464c6eec243/raw/_DontOpen.txt?timestamp=' + (+new Date()),
+                fetch: true,
+                nocache: false,
+                revalidate: true,
+                onload: Runcode
+            });
+        }else{
+            Runcode(_DontOpen)
+        }
     }
     else {
         SpeedCtr()
@@ -107,8 +140,10 @@
         var i = 0; //index (for looping purpose)
         var interval; //for setInterval
         var duration; //for setInterval duration
-
-        var _DontOpen = response.responseText.split(',').map(item => item.replace(/'/ig, '"'))
+        if( response.responseText){
+            _DontOpen = response.responseText.split(',').map(item => item.replace(/'/ig, '"'))
+        }else{
+            _DontOpen = _DontOpen.map(item => item.replace(/'/ig, '"'));alert(_DontOpen)}
         if (_views_ToVisit.length >= _DontOpen.length) {
             var _totalLink = _views_ToVisit.length - _DontOpen.length;
         } else if (_DontOpen.length >= _views_ToVisit.length) {
@@ -231,8 +266,8 @@
                             var inter = setInterval(() => {
                                 views_left--
                                 if (views_left >= 0) {
-                                    open_link.click()
-                                    //console.log('a', open_link.parentElement.parentElement.getElementsByClassName('name')[0].innerText.trim())
+                                    //open_link.click()
+                                    console.log('a', open_link.parentElement.parentElement.getElementsByClassName('name')[0].innerText.trim())
                                     clearInterval(interval)
                                     appear() // re-run
                                 }
@@ -262,7 +297,7 @@
                     //console.log('Done opening')
                     button.innerHTML = 'Done opening-Click to Run Again'
                     clearInterval(interval)
-                    Re_run()
+                    //Re_run()
                     //window.close();//window.close()
                 }
             }, duration);
