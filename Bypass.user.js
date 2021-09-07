@@ -1,6 +1,6 @@
 (function() {
     function bypass(l){
-        const key=atob(JSON.parse(GM_getResourceText('key')))
+        const key=atob(GM_getResourceText("key").match(/\w*/gi).filter(e=>""!=e)[0])
         const baseUrl = 'https://api.yuumari.com/alpha-bypass/';
         const u = key;
         fetch(baseUrl, {
