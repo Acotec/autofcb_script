@@ -1,6 +1,6 @@
 (function() {
     'use strict';
-    var _DontOpen =JSON.parse(GM_getResourceText("_DontOpen").replace(/'/ig,'"'))//.map(e => e.toLowerCase())
+    var _DontOpen = JSON.parse(GM_getResourceText("_DontOpen").replace(/'/ig, '"')) //.map(e => e.toLowerCase())
     console.log(_DontOpen)
     var _open_link_fast = [].map(e => e.toLowerCase());
     var _alreadyRun = GM_getValue("_alreadyRun");
@@ -13,29 +13,31 @@
     var button = document.createElement("button");
     var body = document.getElementsByClassName('col item')[1].getElementsByClassName('content-box')[0];
 
-    function AutoUpdateDontOpen(){
+    function AutoUpdateDontOpen() {
         var AutoUpdateB = document.createElement("button");
         var AutoUpdate = document.getElementsByClassName('col item')[2].getElementsByClassName('content-box')[0];
         AutoUpdate.appendChild(AutoUpdateB);
         try {
             if (GM_getValue("AutoUpdate")) {
                 AutoUpdateB.innerHTML = 'AutoUpdate_ON';
-                AutoUpdateB.style="background-color:Violet;color:white"
+                AutoUpdateB.style = "background-color:Violet;color:white"
             } else {
                 GM_setValue("AutoUpdate", false)
                 AutoUpdateB.innerHTML = 'AutoUpdate_OFF';
-                AutoUpdateB.style="background-color:black;color:white"
+                AutoUpdateB.style = "background-color:black;color:white"
             }
             AutoUpdateB.addEventListener('click', function(e) {
                 if (GM_getValue("AutoUpdate", true)) {
                     GM_setValue("AutoUpdate", false);
                     AutoUpdateB.innerHTML = 'AutoUpdate_OFF';
-                    AutoUpdateB.style="background-color:black;color:white"
+                    AutoUpdateB.style = "background-color:black;color:white"
                 } else {
                     GM_setValue("AutoUpdate", true);
                     AutoUpdateB.innerHTML = 'AutoUpdate_ON'
-                    AutoUpdateB.style="background-color:Violet;color:white"
-                }});} catch (err) {}
+                    AutoUpdateB.style = "background-color:Violet;color:white"
+                }
+            });
+        } catch (err) {}
     }
 
     function checkButton() {
@@ -84,7 +86,7 @@
     function DelayShort() {
         //var dcoin = document.getElementById('visit239')[1]
         var ShortDelayButton = document.createElement("button"); //create button to enable/disable the Delay of some shortlink b4 they open
-        var ShortDelay= document.getElementsByClassName("shortlinks")[0] //Append somewhere
+        var ShortDelay = document.getElementsByClassName("shortlinks")[0] //Append somewhere
         ShortDelay.appendChild(ShortDelayButton)
         try {
             if (GM_getValue("delayShort")) {
@@ -107,11 +109,11 @@
     };
 
 
-    AutoUpdateDontOpen()//run 
+    AutoUpdateDontOpen() //run 
     //function to get the shortlinks that should not be open
     if (GM_getValue("_alreadyRun") != true) {
         GM_setValue("_alreadyRun", true);
-        if(GM_getValue("use")){
+        if (GM_getValue("use")) {
             GM_xmlhttpRequest({
                 method: 'GET',
                 url: 'https://gist.github.com/Harfho/d4805d8a56793fa59d47e464c6eec243/raw/_DontOpen.txt?timestamp=' + (+new Date()),
@@ -120,11 +122,10 @@
                 revalidate: true,
                 onload: Runcode
             });
-        }else{
+        } else {
             Runcode(_DontOpen)
         }
-    }
-    else {
+    } else {
         SpeedCtr()
         body.appendChild(button);
         button.innerHTML = "Script Not Running -- SHORTLINKS=" + _views_ToVisit.length;
@@ -140,10 +141,11 @@
         var i = 0; //index (for looping purpose)
         var interval; //for setInterval
         var duration; //for setInterval duration
-        if( response.responseText){
+        if (response.responseText) {
             _DontOpen = response.responseText.split(',').map(item => item.replace(/'/ig, '"'))
-        }else{
-            _DontOpen = _DontOpen.map(item => item.replace(/'/ig, '"'));alert(_DontOpen)}
+        } else {
+            _DontOpen = _DontOpen.map(item => item.replace(/'/ig, '"'))
+        }
         if (_views_ToVisit.length >= _DontOpen.length) {
             var _totalLink = _views_ToVisit.length - _DontOpen.length;
         } else if (_DontOpen.length >= _views_ToVisit.length) {
@@ -286,8 +288,9 @@
                         }
                     } //end
                     clearInterval(interval); //clear
-                }
-                catch(err){null};
+                } catch (err) {
+                    null
+                };
                 clearInterval(interval); //clear
                 //console.log(limit);//console.log('duration using is', (duration / 1000).toFixed(2))
                 if (limit != 0) {
