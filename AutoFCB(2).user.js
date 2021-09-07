@@ -268,8 +268,8 @@
                             var inter = setInterval(() => {
                                 views_left--
                                 if (views_left >= 0) {
-                                    //open_link.click()
-                                    console.log('a', open_link.parentElement.parentElement.getElementsByClassName('name')[0].innerText.trim())
+                                    open_link.click()
+                                    //console.log('a', open_link.parentElement.parentElement.getElementsByClassName('name')[0].innerText.trim())
                                     clearInterval(interval)
                                     appear() // re-run
                                 }
@@ -300,7 +300,7 @@
                     //console.log('Done opening')
                     button.innerHTML = 'Done opening-Click to Run Again'
                     clearInterval(interval)
-                    //Re_run()
+                    Re_run()
                     //window.close();//window.close()
                 }
             }, duration);
