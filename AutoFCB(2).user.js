@@ -113,7 +113,7 @@
     //function to get the shortlinks that should not be open
     if (GM_getValue("_alreadyRun") != true) {
         GM_setValue("_alreadyRun", true);
-        if (GM_getValue("use")) {
+        if (GM_getValue("AutoUpdate")) {
             GM_xmlhttpRequest({
                 method: 'GET',
                 url: 'https://gist.github.com/Harfho/d4805d8a56793fa59d47e464c6eec243/raw/_DontOpen.txt?timestamp=' + (+new Date()),
