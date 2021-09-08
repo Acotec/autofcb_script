@@ -95,7 +95,7 @@
                 GM_setValue("delayShort", false)
                 ShortDelayButton.innerHTML = 'Dnt_Delay';
             }
-            ShortDelay.addEventListener('click', function(e) {
+           ShortDelayButton.addEventListener('click', function(e) {
                 if (GM_getValue("delayShort", true)) {
                     GM_setValue("delayShort", false);
                     ShortDelayButton.innerHTML = 'Dnt_Delay';
