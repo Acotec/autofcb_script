@@ -109,7 +109,7 @@
     };
 
 
-    AutoUpdateDontOpen() //run 
+    AutoUpdateDontOpen() //run
     //function to get the shortlinks that should not be open
     if (GM_getValue("_alreadyRun") != true) {
         GM_setValue("_alreadyRun", true);
@@ -141,10 +141,11 @@
         var i = 0; //index (for looping purpose)
         var interval; //for setInterval
         var duration; //for setInterval duration
-        if (response.responseText) {
-            _DontOpen = response.responseText.split(',').map(item => item.replace(/'/ig, '"'))
+        if (GM_getValue('AutoUpdate')) {
+            let getDontOpen = response.responseText.replace(/'|"|\[|\]/ig, '').split(',');
+            _DontOpen = getDontOpen.map(item => item.replace(/'/ig, '"').toLowerCase())
         } else {
-            _DontOpen = _DontOpen.map(item => item.replace(/'/ig, '"'))
+            _DontOpen = _DontOpen.map(item => item.replace(/'/ig, '"').toLowerCase());
         }
         if (_views_ToVisit.length >= _DontOpen.length) {
             var _totalLink = _views_ToVisit.length - _DontOpen.length;
