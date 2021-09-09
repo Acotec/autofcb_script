@@ -233,7 +233,7 @@
 
         function DontOpen_LinkByName(linkName) {
             //alert('Dontopen '+linkName)
-            if (new RegExp(linkName, 'ig').test(_DontOpen)) {
+             if (_DontOpen.includes(linkName)){
                 return true
             } else {
                 return false
