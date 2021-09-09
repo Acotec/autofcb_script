@@ -233,7 +233,7 @@
 
         function DontOpen_LinkByName(linkName) {
             //alert('Dontopen '+linkName)
-             if (_DontOpen.includes(linkName)){
+            if (_DontOpen.includes(linkName.toLowerCase())){
                 return true
             } else {
                 return false
