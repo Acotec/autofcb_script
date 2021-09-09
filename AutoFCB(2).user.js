@@ -1,7 +1,6 @@
 (function() {
     'use strict';
-    var _DontOpen = JSON.parse(GM_getResourceText("_DontOpen").replace(/'/ig, '"')) //.map(e => e.toLowerCase())
-    console.log(_DontOpen)
+    var _DontOpen =GM_getResourceText("_DontOpen").replace(/'|"|\[|\]/ig,'').split(',');
     var _open_link_fast = [].map(e => e.toLowerCase());
     var _alreadyRun = GM_getValue("_alreadyRun");
     var _available_link = parseInt(document.getElementsByClassName('amount')[1].textContent);
