@@ -18,14 +18,14 @@
         },false,);
 
         //location = 'https://faucetpay.io/transfer'
-        if((!payouttoday>=3)|| parseInt(wallet_balance)==0 ){
+        if(!(payouttoday>=3)|| parseInt(wallet_balance)==0 ){
             if(payouttoday<3){alert('You have not withdraw from all the faucet sites Today')}
             else{alert('Wallet Balance is '+wallet_balance)}
         }
         else{
-           window.location.replace('https://faucetpay.io/transfer')
+            window.location.replace('https://faucetpay.io/transfer')
             // ;GM_setValue('transfer',false)
-            }
+        }
     };
     if(/transfer/gi.test(window.location.href)){
         waitForKeyElements(".alert-info", (element) => {
