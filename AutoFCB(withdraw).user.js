@@ -8,7 +8,8 @@
         //alert(value)
         if(String(value)!=='undefined'){
             let element = document.querySelector(id);
-            element.value = value;
+            //element.value = value;
+            element[1].selected=true
             element.dispatchEvent(new Event('change'));
         }else{
             console.log('No currency claim yet ')
