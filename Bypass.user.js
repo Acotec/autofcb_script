@@ -1,33 +1,37 @@
 (function() {
+    var tryagain=sessionStorage.getItem('tryagain')
+    if(/undefined|null/ig.test(sessionStorage.getItem('tryagain'))){sessionStorage.setItem('tryagain',1);tryagain=sessionStorage.getItem('tryagain')}
+    let key =atob(GM_getResourceText("key").match(/\w*/gi).filter(e=>""!=e)[0])//get the api and decrypt it using btoa>atob
     function bypass(l){
-        const key=atob(GM_getResourceText("key").match(/\w*/gi).filter(e=>""!=e)[0])
-        const baseUrl = 'https://api.yuumari.com/alpha-bypass/';
-        const u = key;
-        fetch(baseUrl, {
+        const api = 'https://api.yuumari.com/alpha-bypass/';
+        const u =key
+        GM.xmlHttpRequest({
             method: 'POST',
-            body: new URLSearchParams({u,l})
-        }).then(r => r.json())
-            .then((d)=>{
-            if(!d.message){
-                sessionStorage.removeItem('tryagain')
-                location=d.result
-            }else{
-                let tryagain;
-                tryagain=sessionStorage.getItem('tryagain')
-                if(sessionStorage.getItem('tryagain')==null){sessionStorage.setItem('tryagain',1);tryagain=sessionStorage.getItem('tryagain')}
-                if(parseInt(tryagain)<=3){
-                    sessionStorage.setItem('tryagain',parseInt(tryagain)+1);
-                    window.location.reload(true)}
-                else{
+            headers: {'Content-Type': 'application/x-www-form-urlencoded',},
+            url: api,
+            data: new URLSearchParams({u,l}).toString(),
+            onload: r => {
+                let d =JSON.parse(r.responseText)
+                if(d.message==''){
                     sessionStorage.removeItem('tryagain')
-                    GM_notification({
-                        title:'!Bypass-- '+window.location.host,
-                        text:d.message+"--"+l,
-                        timeout:300*1000,
-                        ondone:()=>{window.close()},
-                    });
-                    GM_setClipboard(l,{type:'text/plain'})
-                    window.close()
+                    window.location=d.result
+                }else{
+                    if(parseInt(tryagain)<=3){
+                        sessionStorage.setItem('tryagain',parseInt(tryagain)+1);
+                        window.location.reload(true)
+                    }
+                    else{
+                        sessionStorage.removeItem('tryagain')
+                        GM_notification({
+                            title:'!Bypass-- '+window.location.host,
+                            text:d.message+"--"+l,
+                            timeout:300*1000,
+                            ondone:()=>{window.close()},
+                            onclick:()=>{window.close()}
+                        });
+                        GM_setClipboard(l,{type:'text/plain'})
+                        window.close()
+                    }
                 }
             }
         });
