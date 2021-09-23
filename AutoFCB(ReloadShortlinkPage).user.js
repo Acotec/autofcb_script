@@ -20,10 +20,14 @@
                 ondone:()=>{delete(sessionStorage.tryagain);window.close()},
                 onclick:()=>{delete(sessionStorage.tryagain);window.open(window.location.href);window.close()}
             });
-            delete(sessionStorage.tryagain);
-            GM_setClipboard(window.location.href,'text/plain')//data,info
-            setTimeout(()=>{window.close()},10*1000)
-        }
+          if(!/coin.mg$/ig.test(window.location.host)){//host does not contain coin.mg
+                delete(sessionStorage.tryagain);
+                GM_setClipboard(window.location.href,'text/plain')//data,info
+                window.close()}
+          else{//host contain coin.mg
+                sessionStorage.setItem('tryagain',1)
+                setTimeout(()=>{window.close()},20*1000)
+            }
     }
     var autofcb = /auto(faucet|claim|bitco).(in|org).*|.+\/===/ig.test(window.location.href)
     if(!autofcb){
