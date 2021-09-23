@@ -29,6 +29,7 @@
                 setTimeout(()=>{window.close()},20*1000)
             }
     }
+    }//endof function
     var autofcb = /auto(faucet|claim|bitco).(in|org).*|.+\/===/ig.test(window.location.href)
     if(!autofcb){
         refresh()
