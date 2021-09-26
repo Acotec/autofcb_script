@@ -1,6 +1,5 @@
 (function() {
     'use strict';
-    // Your code here...
     var coinS=GM_getValue("coin",null);
     var loop = 0
 
@@ -8,9 +7,7 @@
         //alert(value)
         if(String(value)!=='undefined'){
             let element = document.querySelector(id);
-            //element.value = value;
-            element[1].selected=true
-            element.dispatchEvent(new Event('change'));
+            Array.from(element.options).filter(a=>{if(RegExp(value,'ig').test(a.innerText.replace(/\s/ig,''))){a.selected = true;element.dispatchEvent(new Event('change'));}});
         }else{
             console.log('No currency claim yet ')
         }
@@ -59,7 +56,7 @@
             else{
                 clearInterval(inter);clearInterval(inter)
                 if(!amount){
-                    selectFromDropDown('#processor','34')
+                    selectFromDropDown('#processor','faucetpay')
                     selectFromDropDown('#captcha-select','solvemedia')}
 
             }
