@@ -1,6 +1,8 @@
 (function() {
     var href = window.location.href
-    if(/dogemate.com|faupto.com/gi.test(href)){$("#bdt").click()}
+    if(/autofaucet.org\/auth\/signin/ig.test(href)){setInterval((e=document.querySelector("#submit"))=>{
+        if(/Signing.*in/ig.test(e.innerText)){window.location.reload(false)}},2000)}
+    else if(/dogemate.com|faupto.com/gi.test(href)){$("#bdt").click()}
     else if (/theblogcash/gi.test(href)){document.getElementsByClassName("btn btn-info text-white btn-lg next-button")[0].click()}
     else if (/orangeptc/gi.test(href)){setTimeout( ()=>{document.querySelector("input").click()},4002)}
     else if (/prolinks.xyz|linkdesh.xyz|bitsfree.xyz|dgbauto|cryptofans|phoenixfaucets/gi.test(href)){waitForKeyElements('#mdt',(e)=>{e.click()},true,0)}
@@ -11,5 +13,5 @@
     else if(/techmodygi.io|ez4mods.com/gi.test(href)){ setInterval(()=>{yuidea1()},2000)}
     else if(/forex-gold.net|4orex4.com|mobi2c.com/gi.test(href)){waitForKeyElements('a[href*="health"]',(e)=>{ window.location=e.getAttribute('href')},true,0)}
     else if(/healthy4pepole.com/gi.test(href)){scrollToForm();waitForKeyElements('.s-btn-f',(e)=>{ window.location=e.getAttribute('href')},true,0)
-                                            }
+                                              }
 })();
