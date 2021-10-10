@@ -19,7 +19,8 @@
                 let element = document.querySelector(id);
                 Array.from(element.options).filter(a=>{if(RegExp(value,'ig').test(a.innerText.replace(/\s/ig,''))){a.selected = true;element.dispatchEvent(new Event('change'));}});
             }}
+        //setInterval(()=>{selectFromDropDown('#captcha-select','solvemedia')},1000)
         selectFromDropDown('#captcha-select','solvemedia')
+        setTimeout(()=>{selectFromDropDown('#captcha-select','solvemedia');console.log('reselect solve_media')},5000)
     }
-
 })();
