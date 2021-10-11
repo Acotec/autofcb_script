@@ -21,6 +21,7 @@
             }}
         //setInterval(()=>{selectFromDropDown('#captcha-select','solvemedia')},1000)
         selectFromDropDown('#captcha-select','solvemedia')
-        setTimeout(()=>{selectFromDropDown('#captcha-select','solvemedia');console.log('reselect solve_media')},5000)
+        setTimeout(()=>{selectFromDropDown('#captcha-select','solvemedia');console.log('reselect solve_media')},3000)
+        setInterval((e=document.querySelector(".toast"))=>{if(/error/ig.test(e.innerText)){window.location.reload(false)}},1000)
     }
 })();
