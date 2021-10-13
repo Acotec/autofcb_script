@@ -29,7 +29,7 @@
                     text:msg,
                     timeout:10*1000,
                     ondone:()=>{},
-                    onclick:()=>{window.open(window.location.href)}
+                    onclick:()=>{window.focus()}
                 });
             }
             else{
@@ -39,7 +39,7 @@
                     text:msg,
                     timeout:10*1000,
                     ondone:()=>{},
-                    onclick:()=>{window.open(window.location.href)}
+                    onclick:()=>{window.focus()}
                 });
             };
         }
