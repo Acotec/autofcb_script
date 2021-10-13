@@ -20,7 +20,7 @@
     },false);
     waitForKeyElements('.toast-message', (element) => {
         if(/payment has been sent/gi.test(element.innerHTML) && /dashboard\/withdraw\/\w+/gi.test(window.location.href)){
-            let url='https://'+ window.location.host +'/dashboard/claim/manual'
+            let url='https://autofaucet.org/dashboard/shortlinks'//'https://'+ window.location.host +'/dashboard/claim/manual'
             window.location=url
         }
         else if(/credited to your balance/gi.test(element.innerHTML) && /claim\/manual/gi.test(window.location.href)){
@@ -28,10 +28,11 @@
             window.location=url
         }
 
-    },false );
+    },false);
 
 
     if(/claim\/manual/gi.test(window.location.href)){
+        selectFromDropDown('#currency-select','USDT')
         let inter=setInterval(function () {
             loop+=1
             let token = document.querySelector("#token-amount").value==0
