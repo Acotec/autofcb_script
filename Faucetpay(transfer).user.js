@@ -21,8 +21,27 @@
 
         //location = 'https://faucetpay.io/transfer'
         if(!(payouttoday>=3)|| parseInt(wallet_balance)==0 ){
-            if(payouttoday<3){alert('You have not withdraw from all the faucet sites Today')}
-            else{alert('Wallet Balance is '+wallet_balance)}
+            var acct = document.querySelector('.avatar-initial').innerText
+            if(payouttoday<3){
+                var msg = 'You have not withdraw from all the faucet sites Today in '+acct
+                GM_notification({
+                    title:window.location.host,
+                    text:msg,
+                    timeout:10*1000,
+                    ondone:()=>{},
+                    onclick:()=>{window.open(window.location.href)}
+                });
+            }
+            else{
+                msg = 'Wallet Balance of '+acct+ " is " +wallet_balance
+                GM_notification({
+                    title:window.location.host,
+                    text:msg,
+                    timeout:10*1000,
+                    ondone:()=>{},
+                    onclick:()=>{window.open(window.location.href)}
+                });
+            };
         }
         else{
             window.location.replace('https://faucetpay.io/transfer')
