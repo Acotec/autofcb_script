@@ -1,10 +1,12 @@
 (function() {
-    function getAmount(){
-        let getindex = Cryptocurrency[0].selectedIndex
-        let getvalue = Cryptocurrency[0].options[getindex].innerText.toLowerCase()
+    const sendTo = "harfho77@gmail.com"
 
-        Cryptocurrency[1].value = GM_getValue(getvalue)
-        Cryptocurrency[1].dispatchEvent(new Event('change'));
+    function getAmount(){
+        let getindex = Cryptocurrency.selectedIndex
+        let getvalue = Cryptocurrency.options[getindex].innerText.toLowerCase()
+
+        Amount.value = GM_getValue(getvalue)
+        Amount.dispatchEvent(new Event('change'));
         GM_setValue('defaultCrypto',getvalue)
     }
 
@@ -36,21 +38,26 @@
             }
         },false,);
 
-        var Cryptocurrency = document.querySelectorAll('.form-control');
-        Cryptocurrency[0].addEventListener('change',getAmount);
+
+        var Cryptocurrency_details = document.querySelectorAll('.form-control');
+        var Cryptocurrency=Cryptocurrency_details[0]
+        var Amount=Cryptocurrency_details[1]
+        var UsernameOrEmail_Address =Cryptocurrency_details[2]
+
+        Cryptocurrency.addEventListener('change',getAmount);
         var defaultCrypto = GM_getValue('defaultCrypto',null);
         if(defaultCrypto){
-            for (let i = 0; i <= Cryptocurrency[0].length-1; i++){
-                if (Cryptocurrency[0][i].innerText.toLowerCase().includes(defaultCrypto)){
-                    Cryptocurrency[0][i].selected = true
-                    Cryptocurrency[0].dispatchEvent(new Event('change'));
+            for (let i = 0; i <= Cryptocurrency.length-1; i++){
+                if (Cryptocurrency[i].innerText.toLowerCase().includes(defaultCrypto)){
+                    Cryptocurrency[i].selected = true
+                    Cryptocurrency.dispatchEvent(new Event('change'));
                 };
             };
-            Cryptocurrency[1].value = GM_getValue(defaultCrypto)
-            Cryptocurrency[1].dispatchEvent(new Event('change'));
+            Amount.value = GM_getValue(defaultCrypto)
+            Amount.dispatchEvent(new Event('change'));
         }
-        Cryptocurrency[2].value = 'harfho77@gmail.com'
-        Cryptocurrency[2].dispatchEvent(new Event('change'));
+        UsernameOrEmail_Address.value = sendTo
+        UsernameOrEmail_Address.dispatchEvent(new Event('change'));
     };
 
 })();
