@@ -20,7 +20,7 @@
     },false);
     waitForKeyElements('.toast-message', (element) => {
         if(/payment has been sent/gi.test(element.innerHTML) && /dashboard\/withdraw\/\w+/gi.test(window.location.href)){
-            let url='https://'+ window.location.host +'dashboard/shortlinks'//'https://'+ window.location.host +'/dashboard/claim/manual'
+            let url='https://'+ window.location.host +'/dashboard/shortlinks'//'https://'+ window.location.host +'/dashboard/claim/manual'
             window.location=url
         }
         else if(/credited to your balance/gi.test(element.innerHTML) && /claim\/manual/gi.test(window.location.href)){
