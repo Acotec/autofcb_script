@@ -26,6 +26,8 @@
         else if(/credited to your balance/gi.test(element.innerHTML) && /claim\/manual/gi.test(window.location.href)){
             let url='https://'+ window.location.host +'/dashboard/withdraw/'+ GM_getValue("coin")
             window.location=url
+        }else if(/You entered an incorrect answer for the captcha, please try again|wrong.?answer/.test(element.innerHTML)){
+            window.location.reload(false)
         }
 
     },false);
