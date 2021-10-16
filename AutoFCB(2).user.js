@@ -233,7 +233,8 @@
 
         function DontOpen_LinkByName(linkName) {
             //alert('Dontopen '+linkName)
-            if (_DontOpen.includes(linkName.toLowerCase())){
+            let check = _DontOpen.some((link) => { return new RegExp('^'+linkName, "ig").test(link)})//check if linkName is among _DontOpen
+            if (check ){
                 return true
             } else {
                 return false
