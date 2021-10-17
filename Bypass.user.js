@@ -1,4 +1,8 @@
 (function() {
+    if ( window.history.replaceState ) {
+    window.history.replaceState( null, null, window.location.href )
+    }//to prevent a resubmit on refresh and back button
+    //---------------------------------------------------------//
     var tryagain=sessionStorage.getItem('tryagain')
     if(/undefined|null/ig.test(sessionStorage.getItem('tryagain'))){sessionStorage.setItem('tryagain',1);tryagain=sessionStorage.getItem('tryagain')}
     let key =atob(GM_getResourceText("key").match(/\w*/gi).filter(e=>""!=e)[0])//get the api and decrypt it using btoa>atob
