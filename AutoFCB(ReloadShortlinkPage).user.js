@@ -20,7 +20,7 @@
                 ondone:()=>{delete(sessionStorage.tryagain);window.close()},
                 onclick:()=>{delete(sessionStorage.tryagain);window.open(window.location.href);window.close()}
             });
-          if(!/coin.mg$/ig.test(window.location.host)){//host does not contain coin.mg
+          if(!/coin.mg|hcsbtc.eu$/ig.test(window.location.host)){//host does not contain coin.mg
                 delete(sessionStorage.tryagain);
                 GM_setClipboard(window.location.href,'text/plain')//data,info
                 window.close()}
