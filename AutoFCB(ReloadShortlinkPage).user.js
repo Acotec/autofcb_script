@@ -20,7 +20,7 @@
                 ondone:()=>{delete(sessionStorage.tryagain);window.close()},
                 onclick:()=>{delete(sessionStorage.tryagain);window.open(window.location.href);window.close()}
             });
-          if(!/coin.mg|hcsbtc.eu$/ig.test(window.location.host)){//host does not contain coin.mg
+          if(!/coin.mg|hcsbtc.eu/ig.test(window.location.host)){//host does not contain coin.mg
                 delete(sessionStorage.tryagain);
                 GM_setClipboard(window.location.href,'text/plain')//data,info
                 window.close()}
@@ -30,7 +30,7 @@
             }
     }
     }//endof function
-    var autofcb = /auto(faucet|claim|bitco).(in|org).*|.+\/===/ig.test(window.location.href)
+    var autofcb = /auto(faucet|claim|bitco).(in|org).+(shortlinks$|claim.+|withdraw.*|exchange)|.+\/===/ig.test(window.location.href)
     if(!autofcb){
         refresh()
     }
