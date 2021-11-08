@@ -3,7 +3,10 @@
     // Your code here...
     var parag = document.createElement("p");
     parag.setAttribute('class','amount')
+    var second_parag = document.createElement("p");
+    second_parag.setAttribute('class','title')
     var addto = document.getElementsByClassName('col item')[1].getElementsByClassName('content-box')[0]
+    var addDontOpen = document.getElementsByClassName('col item')[1].getElementsByClassName('content-box')[0]
     var getElement=Array.from(document.getElementsByClassName('info'))
     var FCT =0
 
@@ -22,4 +25,6 @@
 
     parag.innerText='Total FCT:'+FCT
     addto.append(parag)
+    second_parag.innerText='Available Shortlinks:'+getElement.length
+    addto.append(second_parag)
 })();
