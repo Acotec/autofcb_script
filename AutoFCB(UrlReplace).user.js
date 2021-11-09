@@ -26,6 +26,7 @@
         else if(/11bit.co.in/.test(url)){window.location='http:/'+h.pathname.replace(/bitshort/,'bitshort.co')}
         else if(/trxking.xyz\/bonus/.test(url)){window.location='http:/'+h.pathname.replace(/\/bonus/,'shrinkpay.crazyblog.in/')}
         else if(/.*clickscoin.com\/.*ccsl\/(.*)/ig.test(url)){path = h.pathname.replace(/.*ccsl/,'');return 'https://ccsl.xyz/'+path }
+        else if(/taghreed\/Js2V/ig.test(url)){path =url.replace(/taghreed\/Js2V/ig,'');return path}
         //-----------------meta-----------------------------------------------------//
         else if(url.includes('themezon.net')){
             path = h.search.replace(/\?/,'')
