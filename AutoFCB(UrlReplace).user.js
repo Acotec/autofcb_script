@@ -5,6 +5,7 @@
     var l = ((h) => {
         let url = window.location.href
         //------------Replace$Redirect--------------------------------------------------------//
+        if (/\?utm.*/ig.test(url)){window.location=url.replace(/\?utm.*/ig,'')};
         if (url.includes('adsy.pw') && h.searchParams.has('url')) {return (h.searchParams.get('url'))}
         else if (url.includes('gainprofitblog1.freesats.xyz')) {return ('gainprofit.xyz' + h.pathname)}
         else if (url.includes('crypto-faucet.xyz')) {
