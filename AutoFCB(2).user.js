@@ -1,6 +1,7 @@
 (function() {
     'use strict';
-    var _DontOpen =GM_getResourceText("_DontOpen").replace(/'|"|\[|\]/ig,'').split(',');
+    var _DontOpen = GM_getResourceText("_DontOpen").replace(/'|"|\[|\]/ig, '').split(',');
+    var shortlinks_name = GM_getResourceText("shortlinks_name").replace(/'|"|\[|\]|\s/ig, '').split(',');
     var _open_link_fast = [].map(e => e.toLowerCase());
     var _alreadyRun = GM_getValue("_alreadyRun");
     var _available_link = parseInt(document.getElementsByClassName('amount')[1].textContent);
@@ -52,8 +53,8 @@
             button.innerHTML = "Script Stop";
             sessionStorage.removeItem("close")
             location.reload()
-        };
-    };
+        }
+    }
 
     function SpeedCtr() {
         var speed = GM_getValue('speed', 0.1); //the duration speed
@@ -72,15 +73,15 @@
             speed = parseFloat((speed + 0.01).toFixed(2))
             GM_setValue("speed", speed);
             dis.innerHTML = 'CS - ' + GM_getValue('speed') + ' Seconds' // CS = current setSpeed
-        });
+        })
         speed_sub.addEventListener("click", function() {
             if (!(GM_getValue('speed') < 0.05)) {
                 speed = parseFloat((speed - 0.01).toFixed(2))
                 GM_setValue("speed", speed);
             }
             dis.innerHTML = 'CS - ' + GM_getValue('speed') + ' Seconds'
-        });
-    };
+        })
+    }
 
     function DelayShort() {
         //var dcoin = document.getElementById('visit239')[1]
@@ -94,7 +95,7 @@
                 GM_setValue("delayShort", false)
                 ShortDelayButton.innerHTML = 'Dnt_Delay';
             }
-           ShortDelayButton.addEventListener('click', function(e) {
+            ShortDelayButton.addEventListener('click', function(e) {
                 if (GM_getValue("delayShort", true)) {
                     GM_setValue("delayShort", false);
                     ShortDelayButton.innerHTML = 'Dnt_Delay';
@@ -105,7 +106,7 @@
                 //console.log(GM_getValue("delayShort"))
             });
         } catch (err) {}
-    };
+    }
 
 
     AutoUpdateDontOpen() //run
@@ -115,12 +116,23 @@
         if (GM_getValue("AutoUpdate")) {
             GM_xmlhttpRequest({
                 method: 'GET',
-                url: 'https://gist.github.com/Harfho/d4805d8a56793fa59d47e464c6eec243/raw/_DontOpen.txt?timestamp=' + (+new Date()),
-                fetch: true,
+                url: 'https://gist.github.com/Harfho/d4805d8a56793fa59d47e464c6eec243/raw/shortlinks_name.txt?timestamp=' + (+new Date()),
                 nocache: false,
-                revalidate: true,
-                onload: Runcode
-            });
+                onload: get_Shortlinks_and_DontOpen
+            })
+
+            function get_Shortlinks_and_DontOpen(response) {
+                let get_shortlinks_name = response.responseText.replace(/'|"|\[|\]|\s/ig, '').split(',');
+                shortlinks_name = get_shortlinks_name.map(item => item.replace(/'/ig, '"').toLowerCase());
+                //console.log(shortlinks_name)
+                GM_xmlhttpRequest({
+                    method: 'GET',
+                    url: 'https://gist.github.com/Harfho/d4805d8a56793fa59d47e464c6eec243/raw/_DontOpen.txt?timestamp=' + (+new Date()),
+                    fetch: true,
+                    nocache: false,
+                    onload: Runcode
+                });
+            }
         } else {
             Runcode(_DontOpen)
         }
@@ -133,7 +145,7 @@
             checkButton()
         });
 
-    };
+    }
 
     function Runcode(response) {
         /* variable for appearFunction */
@@ -145,6 +157,7 @@
             _DontOpen = getDontOpen.map(item => item.replace(/'/ig, '"').toLowerCase())
         } else {
             _DontOpen = _DontOpen.map(item => item.replace(/'/ig, '"').toLowerCase());
+            shortlinks_name = shortlinks_name.map(item => item.replace(/'/ig, '"').toLowerCase());
         }
         if (_views_ToVisit.length >= _DontOpen.length) {
             var _totalLink = _views_ToVisit.length - _DontOpen.length;
@@ -167,12 +180,12 @@
                     button.innerHTML = "Script Not Running -- SHORTLINKS=" + _views_ToVisit.length;
                 }
             }
-        };
+        }
 
         //function to reload the page
         function reloadP() {
             sessionStorage.setItem("reloading", "true");
-        };
+        }
 
         //function to re-run the script
         function Re_run() {
@@ -189,7 +202,7 @@
                 sessionStorage.removeItem("close")
                 window.close()
             }
-        };
+        }
 
         function ViewsOnPage() {
             for (let i = 0; i < _views_ToVisit.length; i++) {
@@ -199,7 +212,7 @@
                 let totalView = getViewsLeft.replace(exTotalNum, '') // replace / with ''
                 _num_ofLink_toVisit.push(parseInt(totalView)) // add to _num_ofLink_toVisit
             }
-        };
+        }
 
         function Sort_And_Remove_Duplicate() {
             let uniq = _num_ofLink_toVisit.map((name) => {
@@ -214,7 +227,7 @@
             let sorted = Object.keys(uniq).sort((a, b) => uniq[a] < uniq[b])
             _sort_and_Re_Dup = sorted
             //console.log(sorted)
-        };
+        }
 
         function Ordered_LinkToView() {
             for (let i = 0; i < _sort_and_Re_Dup.length; i++) {
@@ -229,17 +242,47 @@
                     }
                 }
             }
-        };
+        }
 
         function DontOpen_LinkByName(linkName) {
             //alert('Dontopen '+linkName)
-            let check = _DontOpen.some((link) => { return new RegExp('^'+linkName, "ig").test(link)})//check if linkName is among _DontOpen
-            if (check ){
+            let check = _DontOpen.some((link) => {
+                return new RegExp('^' + linkName, "ig").test(link)
+            }) //check if linkName is among _DontOpen
+            if (check) {
                 return true
             } else {
                 return false
             }
-        };
+        }
+
+        function update_DontOpen(linkName) {
+            _DontOpen.push(linkName.toLowerCase())
+            var myHeaders = new Headers();
+            myHeaders.append("accept", "application/vnd.github.v3+json");
+            myHeaders.append("Authorization", "Bearer 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");
+            myHeaders.append("Content-Type", "application/json");
+
+            var raw = JSON.stringify({
+                "files": {
+                    "_DontOpen.txt": {
+                        "content": JSON.stringify(_DontOpen)
+                    }
+                }
+            });
+
+            var requestOptions = {
+                method: 'PATCH',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+
+            fetch("https://api.github.com/gists/d4805d8a56793fa59d47e464c6eec243", requestOptions)
+                .then(response => response.text())
+                .then(result => console.log(_DontOpen))
+                .catch(error => console.log('error', error));
+        }
 
         function appear() { //define a function
             let limit = _ordered_LinkToVisitOnPage.length
@@ -258,24 +301,31 @@
                             limit++
                             //console.log('wont open',linkName,limit)
                         } else {
-                            //console.log(linkName)
-                            i++; //increment the index
-                            if (/^coin$/ig.test(linkName.toLowerCase()) && GM_getValue("delayShort")) {
-                                duration = 10 * 1000 //duration can be increase in (secs)
-                            } else {
-                                duration = i * GM_getValue('speed') * 1000
-                            }
-                            //console.log(i)
-                            var inter = setInterval(() => {
-                                views_left--
-                                if (views_left >= 0) {
-                                    open_link.click()
-                                    //console.log('a', open_link.parentElement.parentElement.getElementsByClassName('name')[0].innerText.trim())
-                                    clearInterval(interval)
-                                    appear() // re-run
+                            //console.log(shortlinks_name,linkName.toLowerCase(),shortlinks_name.includes(linkName.toLowerCase()))
+                            if (shortlinks_name.includes(linkName.toLowerCase())) {
+                                //console.log(linkName)
+                                i++; //increment the index
+                                if (/^coin$/ig.test(linkName.toLowerCase()) && GM_getValue("delayShort")) {
+                                    duration = 10 * 1000 //duration can be increase in (secs)
+                                } else {
+                                    duration = i * GM_getValue('speed') * 1000
                                 }
-                            }, duration)
-                            }
+                                //console.log(i)
+                                var inter = setInterval(() => {
+                                    views_left--
+                                    if (views_left >= 0) {
+                                        open_link.click()
+                                        //console.log('a', open_link.parentElement.parentElement.getElementsByClassName('name')[0].innerText.trim())
+                                        clearInterval(interval)
+                                        appear() // re-run
+                                    }
+                                }, duration)
+                                } else {
+                                    console.log(linkName.toLowerCase(), 'Is not among shortlinks to open')
+                                    update_DontOpen(linkName)
+                                }
+
+                        }
                     } //end
                     //if Available link is greater than 1000
                     else {
@@ -291,7 +341,7 @@
                     clearInterval(interval); //clear
                 } catch (err) {
                     null
-                };
+                }
                 clearInterval(interval); //clear
                 //console.log(limit);//console.log('duration using is', (duration / 1000).toFixed(2))
                 if (limit != 0) {
