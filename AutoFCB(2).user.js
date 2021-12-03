@@ -258,11 +258,14 @@
 
         function update_DontOpen(linkName) {
             _DontOpen.push(linkName.toLowerCase())
-            var myHeaders = new Headers();
-            myHeaders.append("accept", "application/vnd.github.v3+json");
-            myHeaders.append("Authorization", "Bearer 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");
-            myHeaders.append("Content-Type", "application/json");
-
+            var access_token = atob(GM_getResourceText("access_token").match(/\w*/gi).filter(e => "" != e)[0]) //get access_token and de_encrpt it btoa to atob
+            access_token = "Bearer " + access_token
+            //console.log(access_token)
+            const myHeaders = new Headers({
+                "accept": "application/vnd.github.v3+json",
+                'Authorization': access_token,
+                "Content-Type": "application/json"
+            })
             var raw = JSON.stringify({
                 "files": {
                     "_DontOpen.txt": {
@@ -270,7 +273,6 @@
                     }
                 }
             });
-
             var requestOptions = {
                 method: 'PATCH',
                 headers: myHeaders,
@@ -280,7 +282,7 @@
 
             fetch("https://api.github.com/gists/d4805d8a56793fa59d47e464c6eec243", requestOptions)
                 .then(response => response.text())
-                .then(result => console.log(_DontOpen))
+                .then(result => console.log(_DontOpen)) //console.log(result)
                 .catch(error => console.log('error', error));
         }
 
@@ -320,10 +322,10 @@
                                         appear() // re-run
                                     }
                                 }, duration)
-                                } else {
-                                    console.log(linkName.toLowerCase(), 'Is not among shortlinks to open')
-                                    update_DontOpen(linkName)
-                                }
+                            } else {
+                                console.log(linkName.toLowerCase(), 'Is not among shortlinks to open')
+                                update_DontOpen(linkName)
+                            }
 
                         }
                     } //end
