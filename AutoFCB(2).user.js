@@ -117,6 +117,7 @@
             GM_xmlhttpRequest({
                 method: 'GET',
                 url: 'https://gist.github.com/Harfho/d4805d8a56793fa59d47e464c6eec243/raw/shortlinks_name.txt?timestamp=' + (+new Date()),
+                fetch: true,
                 nocache: false,
                 onload: get_Shortlinks_and_DontOpen
             })
@@ -134,7 +135,7 @@
                 });
             }
         } else {
-            Runcode(_DontOpen)
+            Runcode()
         }
     } else {
         SpeedCtr()
@@ -147,7 +148,7 @@
 
     }
 
-    function Runcode(response) {
+    function Runcode(response = null) {
         /* variable for appearFunction */
         var i = 0; //index (for looping purpose)
         var interval; //for setInterval
@@ -321,11 +322,11 @@
                                         clearInterval(interval)
                                         appear() // re-run
                                     }
-                                }, duration)
-                            } else {
-                                console.log(linkName.toLowerCase(), 'Is not among shortlinks to open')
-                                update_DontOpen(linkName)
-                            }
+                               }, duration)
+                               } else {
+                                    console.log(linkName.toLowerCase(), 'Is not among shortlinks to open')
+                                    update_DontOpen(linkName)
+                                }
 
                         }
                     } //end
