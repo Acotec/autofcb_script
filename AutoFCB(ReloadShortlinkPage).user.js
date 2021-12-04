@@ -30,7 +30,7 @@
             }
     }
     }//endof function
-    var autofcb = /auto(faucet|claim|bitco).(in|org).+(shortlink.*|claim.+|withdraw.*|exchange)|.+\/===/ig.test(window.location.href)
+    var autofcb = /auto(faucet|claim|bitco).(in|org).+(shortlink.*|claim.+|withdraw.*|exchange)/ig.test(window.location.href)
     if(!autofcb){
         refresh()
     }
