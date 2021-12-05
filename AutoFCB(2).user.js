@@ -1,7 +1,7 @@
 (function() {
     'use strict';
-    var _DontOpen = GM_getResourceText("_DontOpen").replace(/'|"|\[|\]|\s/ig, '').split(',');
-    var shortlinks_name = GM_getResourceText("shortlinks_name").replace(/'|"|\[|\]|\s/ig, '').split(',');
+    var _DontOpen = GM_getResourceText("_DontOpen").replace(/'|"|\[|\]|\s/ig, '').split(',').filter(e=>e);
+    var shortlinks_name = GM_getResourceText("shortlinks_name").replace(/'|"|\[|\]|\s/ig, '').split(',').filter(e=>e);
     var _open_link_fast = [].map(e => e.toLowerCase());
     var _alreadyRun = GM_getValue("_alreadyRun");
     var _available_link = parseInt(document.getElementsByClassName('amount')[1].textContent);
@@ -123,7 +123,7 @@
             })
 
             function get_Shortlinks_and_DontOpen(response) {
-                let get_shortlinks_name = response.responseText.replace(/'|"|\[|\]|\s/ig, '').split(',');
+                let get_shortlinks_name = response.responseText.replace(/'|"|\[|\]|\s/ig, '').split(',').filter(e=>e);
                 shortlinks_name = get_shortlinks_name.map(item => item.replace(/'/ig, '"').toLowerCase());
                 //console.log(shortlinks_name)
                 GM_xmlhttpRequest({
@@ -154,7 +154,7 @@
         var interval; //for setInterval
         var duration; //for setInterval duration
         if (GM_getValue('AutoUpdate')) {
-            let getDontOpen = response.responseText.replace(/'|"|\[|\]|\s/ig, '').split(',');
+            let getDontOpen = response.responseText.replace(/'|"|\[|\]|\s/ig, '').split(',').filter(e=>e);
             _DontOpen = getDontOpen.map(item => item.replace(/'/ig, '"').toLowerCase())
         } else {
             _DontOpen = _DontOpen.map(item => item.replace(/'/ig, '"').toLowerCase());
