@@ -1,6 +1,6 @@
 (function() {
     'use strict';
-    var _DontOpen = GM_getResourceText("_DontOpen").replace(/'|"|\[|\]/ig, '').split(',');
+    var _DontOpen = GM_getResourceText("_DontOpen").replace(/'|"|\[|\]|\s/ig, '').split(',');
     var shortlinks_name = GM_getResourceText("shortlinks_name").replace(/'|"|\[|\]|\s/ig, '').split(',');
     var _open_link_fast = [].map(e => e.toLowerCase());
     var _alreadyRun = GM_getValue("_alreadyRun");
@@ -154,7 +154,7 @@
         var interval; //for setInterval
         var duration; //for setInterval duration
         if (GM_getValue('AutoUpdate')) {
-            let getDontOpen = response.responseText.replace(/'|"|\[|\]/ig, '').split(',');
+            let getDontOpen = response.responseText.replace(/'|"|\[|\]|\s/ig, '').split(',');
             _DontOpen = getDontOpen.map(item => item.replace(/'/ig, '"').toLowerCase())
         } else {
             _DontOpen = _DontOpen.map(item => item.replace(/'/ig, '"').toLowerCase());
