@@ -2,7 +2,7 @@
     'use strict';
     function refresh(){
         let tryagain;
-        var time = 4
+        var time = 7
         tryagain=sessionStorage.getItem('tryagain')
         if(sessionStorage.getItem('tryagain')==null){sessionStorage.setItem('tryagain',1);tryagain=sessionStorage.getItem('tryagain')};
         if(parseInt(tryagain)<=time){
@@ -17,7 +17,7 @@
                 title:window.location.host,
                 text:window.location.href +' \nReloaded'+ time +'-times and will close after 10 seconds ---',
                 timeout:10*1000,
-                ondone:()=>{delete(sessionStorage.tryagain);window.close()},
+                ondone:()=>{delete(sessionStorage.tryagain);sessionStorage.removeItem('tryagain');window.close()},
                 onclick:()=>{delete(sessionStorage.tryagain);window.open(window.location.href);window.close()}
             });
           if(!/coin.mg|hcsbtc.eu/ig.test(window.location.host)){//host does not contain coin.mg
