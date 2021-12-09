@@ -1,7 +1,7 @@
 (function() {
     'use strict';
-    var _DontOpen = GM_getResourceText("_DontOpen").replace(/'|"|\[|\]|\s/ig, '').split(',').filter(e=>e);
-    var shortlinks_name = GM_getResourceText("shortlinks_name").replace(/'|"|\[|\]|\s/ig, '').split(',').filter(e=>e);
+    var _DontOpen = GM_getResourceText("_DontOpen").replace(/'|"|\[|\]|\s/ig, '').split(',').filter(e => e);
+    var shortlinks_name = GM_getResourceText("shortlinks_name").replace(/'|"|\[|\]|\s/ig, '').split(',').filter(e => e);
     var _open_link_fast = [].map(e => e.toLowerCase());
     var _alreadyRun = GM_getValue("_alreadyRun");
     var _available_link = parseInt(document.getElementsByClassName('amount')[1].textContent);
@@ -123,7 +123,7 @@
             })
 
             function get_Shortlinks_and_DontOpen(response) {
-                let get_shortlinks_name = response.responseText.replace(/'|"|\[|\]|\s/ig, '').split(',').filter(e=>e);
+                let get_shortlinks_name = response.responseText.replace(/'|"|\[|\]|\s/ig, '').split(',').filter(e => e);
                 shortlinks_name = get_shortlinks_name.map(item => item.replace(/'/ig, '"').toLowerCase());
                 //console.log(shortlinks_name)
                 GM_xmlhttpRequest({
@@ -154,7 +154,7 @@
         var interval; //for setInterval
         var duration; //for setInterval duration
         if (GM_getValue('AutoUpdate')) {
-            let getDontOpen = response.responseText.replace(/'|"|\[|\]|\s/ig, '').split(',').filter(e=>e);
+            let getDontOpen = response.responseText.replace(/'|"|\[|\]|\s/ig, '').split(',').filter(e => e);
             _DontOpen = getDontOpen.map(item => item.replace(/'/ig, '"').toLowerCase())
         } else {
             _DontOpen = _DontOpen.map(item => item.replace(/'/ig, '"').toLowerCase());
@@ -259,7 +259,7 @@
 
         function update_DontOpen(linkName) {
             _DontOpen.push(linkName.toLowerCase())
-             shortlinks_name.push(linkName)           
+            shortlinks_name.push(linkName)
             var access_token = atob(GM_getResourceText("access_token").match(/\w*/gi).filter(e => "" != e)[0]) //get access_token and de_encrpt it btoa to atob
             access_token = "Bearer " + access_token
             //console.log(access_token)
@@ -326,11 +326,11 @@
                                         clearInterval(interval)
                                         appear() // re-run
                                     }
-                               }, duration)
-                               } else {
-                                    console.log(linkName.toLowerCase(), 'Is not among shortlinks to open')
-                                    update_DontOpen(linkName)
-                                }
+                                }, duration)
+                            } else {
+                                console.log(linkName.toLowerCase(), 'Is not among shortlinks to open')
+                                update_DontOpen(linkName)
+                            }
 
                         }
                     } //end
