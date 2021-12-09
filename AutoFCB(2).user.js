@@ -12,7 +12,7 @@
     var _order_ByName = [];
     var button = document.createElement("button");
     var body = document.getElementsByClassName('col item')[1].getElementsByClassName('content-box')[0];
-    var hideVisitedShortlinks=document.querySelector("div.shide").querySelector(".cwrapper");/checked/gi.test(hideVisitedShortlinks.innerHTML)||hideVisitedShortlinks.click();//check if visited shortlink is hide or hide if not.
+    var hideVisitedShortlinks=document.querySelector("div.shide").querySelector(".cwrapper");/checked/gi.test(hideVisitedShortlinks.innerHTML)||(hideVisitedShortlinks.click(),hideVisitedShortlinks.dispatchEvent(new Event("change")));//check if visited shortlink is hide or not.
     function AutoUpdateDontOpen() {
         var AutoUpdateB = document.createElement("button");
         var AutoUpdate = document.getElementsByClassName('col item')[2].getElementsByClassName('content-box')[0];
