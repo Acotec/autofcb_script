@@ -259,6 +259,7 @@
 
         function update_DontOpen(linkName) {
             _DontOpen.push(linkName.toLowerCase())
+             shortlinks_name.push(linkName)           
             var access_token = atob(GM_getResourceText("access_token").match(/\w*/gi).filter(e => "" != e)[0]) //get access_token and de_encrpt it btoa to atob
             access_token = "Bearer " + access_token
             //console.log(access_token)
@@ -271,6 +272,9 @@
                 "files": {
                     "_DontOpen.txt": {
                         "content": JSON.stringify(_DontOpen)
+                    },
+                    "shortlinks_name.txt": {
+                        "content": JSON.stringify(shortlinks_name)
                     }
                 }
             });
