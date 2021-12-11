@@ -12,7 +12,7 @@
     var _order_ByName = [];
     var button = document.createElement("button");
     var body = document.getElementsByClassName('col item')[1].getElementsByClassName('content-box')[0];
-     var hideVisitedShortlinks=document.querySelector("div.shide").querySelector(".cwrapper");/checked/gi.test(hideVisitedShortlinks.innerHTML)||(setTimeout(()=>{hideVisitedShortlinks.click();hideVisitedShortlinks.dispatchEvent(new Event("change"))},1000));//check if visited shortlink is hide or not.
+    var hideVisitedShortlinks=document.querySelector("div.shide").querySelector(".cwrapper");/checked/gi.test(hideVisitedShortlinks.innerHTML)||(setTimeout(()=>{hideVisitedShortlinks.click();hideVisitedShortlinks.dispatchEvent(new Event("change"))},1000));//check if visited shortlink is hide or not.
     function AutoUpdateDontOpen() {
         var AutoUpdateB = document.createElement("button");
         var AutoUpdate = document.getElementsByClassName('col item')[2].getElementsByClassName('content-box')[0];
@@ -297,8 +297,8 @@
                 try {
                     let _getlink = _ordered_LinkToVisitOnPage.splice(0, 1)[0],
                         open_link = _getlink.parentNode.parentNode.parentNode.querySelector("button"),
-                        exLinkInfo = _getlink.parentNode.parentNode.getElementsByClassName("name")[0].innerText.trim(),
-                        linkName = exLinkInfo.replace(exLinkInfo.match(/\s*\d* .*/), "");
+                        exLinkInfo = _getlink.parentNode.parentNode.getElementsByClassName("name")[0].innerHTML.trim(),
+                        linkName = exLinkInfo.replace(/(<|\s).*/,'')//exLinkInfo.replace(exLinkInfo.match(/\s*\d* .*/), "");
                     if (_available_link <= 1000) {
                         _getlink = _getlink.textContent;
                         let exFirstNum = _getlink.match(/\/\d*/)[0],
@@ -322,15 +322,15 @@
                                     views_left--
                                     if (views_left >= 0) {
                                         open_link.click()
-                                        //console.log('a', open_link.parentElement.parentElement.getElementsByClassName('name')[0].innerText.trim())
+                                        //console.log('a',linkName)
                                         clearInterval(interval)
                                         appear() // re-run
                                     }
                                 }, duration)
-                            } else {
-                                console.log(linkName.toLowerCase(), 'Is not among shortlinks to open')
-                                update_DontOpen(linkName)
-                            }
+                                } else {
+                                    console.log(linkName.toLowerCase(), 'Is not among shortlinks to open')
+                                    update_DontOpen(linkName)
+                                }
 
                         }
                     } //end
@@ -342,7 +342,7 @@
                             limit++
                         } else {
                             open_link.click()
-                            //console.log('b', open_link.parentElement.parentElement.getElementsByClassName('name')[0].innerText.trim())
+                            //console.log('b', linkName)
                         }
                     } //end
                     clearInterval(interval); //clear
