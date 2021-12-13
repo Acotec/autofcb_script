@@ -1,4 +1,7 @@
 (function() {
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href)
+    } //to prevent resubmit on refresh and back button
     'use strict';
     var _DontOpen = GM_getResourceText("_DontOpen").replace(/'|"|\[|\]|\s/ig, '').split(',').filter(e => e);
     var shortlinks_name = GM_getResourceText("shortlinks_name").replace(/'|"|\[|\]|\s/ig, '').split(',').filter(e => e);
@@ -12,7 +15,8 @@
     var _order_ByName = [];
     var button = document.createElement("button");
     var body = document.getElementsByClassName('col item')[1].getElementsByClassName('content-box')[0];
-    var hideVisitedShortlinks=document.querySelector("div.shide").querySelector(".cwrapper");/checked/gi.test(hideVisitedShortlinks.innerHTML)||(setTimeout(()=>{hideVisitedShortlinks.click();hideVisitedShortlinks.dispatchEvent(new Event("change"))},1000));//check if visited shortlink is hide or not.
+    var gist_id="d4805d8a56793fa59d47e464c6eec243"
+    var hideVisitedShortlinks=document.querySelector("div.shide").querySelector(".cwrapper");/checked/gi.test(hideVisitedShortlinks.innerHTML)||(setTimeout(()=>{hideVisitedShortlinks.click();hideVisitedShortlinks.dispatchEvent(new Event("change"))},1500));//check if visited shortlink is hide or not.
     function AutoUpdateDontOpen() {
         var AutoUpdateB = document.createElement("button");
         var AutoUpdate = document.getElementsByClassName('col item')[2].getElementsByClassName('content-box')[0];
@@ -44,14 +48,14 @@
         if (GM_getValue("_alreadyRun") == true) {
             GM_setValue("_alreadyRun", false);
             button.innerHTML = "Script Run";
-            sessionStorage.removeItem("close")
+            localStorage.removeItem("close")
             location.reload()
-            sessionStorage.removeItem("close")
+            localStorage.removeItem("close")
             //console.log("GM_value set to-" + GM_getValue("_alreadyRun"))
         } else {
             GM_setValue("_alreadyRun", true);
             button.innerHTML = "Script Stop";
-            sessionStorage.removeItem("close")
+            localStorage.removeItem("close")
             location.reload()
         }
     }
@@ -116,7 +120,7 @@
         if (GM_getValue("AutoUpdate")) {
             GM_xmlhttpRequest({
                 method: 'GET',
-                url: 'https://gist.github.com/Harfho/d4805d8a56793fa59d47e464c6eec243/raw/shortlinks_name.txt?timestamp=' + (+new Date()),
+                url: 'https://gist.github.com/Harfho/'+gist_id+'/raw/shortlinks_name.txt?timestamp=' + (+new Date()),
                 fetch: true,
                 nocache: false,
                 onload: get_Shortlinks_and_DontOpen
@@ -128,7 +132,7 @@
                 //console.log(shortlinks_name)
                 GM_xmlhttpRequest({
                     method: 'GET',
-                    url: 'https://gist.github.com/Harfho/d4805d8a56793fa59d47e464c6eec243/raw/_DontOpen.txt?timestamp=' + (+new Date()),
+                    url: 'https://gist.github.com/Harfho/'+gist_id+'/raw/_DontOpen.txt?timestamp=' + (+new Date()),
                     fetch: true,
                     nocache: false,
                     onload: Runcode
@@ -153,6 +157,7 @@
         var i = 0; //index (for looping purpose)
         var interval; //for setInterval
         var duration; //for setInterval duration
+        localStorage.setItem("close", "true")
         if (GM_getValue('AutoUpdate')) {
             let getDontOpen = response.responseText.replace(/'|"|\[|\]|\s/ig, '').split(',').filter(e => e);
             _DontOpen = getDontOpen.map(item => item.replace(/'/ig, '"').toLowerCase())
@@ -176,7 +181,7 @@
                 sessionStorage.removeItem("reloading");
                 if (_alreadyRun == false) {
                     button.innerHTML = "Script Run(Click to Run Again)";
-                    sessionStorage.setItem("close", "true") //AutoFCB(Close)
+                    localStorage.setItem("close", "true") //AutoFCB(Close)
                 } else {
                     button.innerHTML = "Script Not Running -- SHORTLINKS=" + _views_ToVisit.length;
                 }
@@ -195,12 +200,12 @@
             if (reRun < time) {
                 GM_setValue("_alreadyRun", false);
                 GM_setValue("Re_run", reRun + 1); //
-                sessionStorage.setItem("close", "true")
+                localStorage.setItem("close", "true")
                 window.close()
             } else {
                 GM_setValue("Re_run", 0); //
                 GM_setValue("_alreadyRun", true);
-                sessionStorage.removeItem("close")
+                localStorage.removeItem("close")
                 window.close()
             }
         }
@@ -285,7 +290,7 @@
                 redirect: 'follow'
             };
 
-            fetch("https://api.github.com/gists/d4805d8a56793fa59d47e464c6eec243", requestOptions)
+            fetch("https://api.github.com/gists/"+gist_id, requestOptions)
                 .then(response => response.text())
                 .then(result => console.log(_DontOpen)) //console.log(result)
                 .catch(error => console.log('error', error));
@@ -385,7 +390,7 @@
         reloadP()
         if (!_alreadyRun) {
             button.innerHTML = "Script Run [" + _totalLink + "] Links will Open";
-            sessionStorage.setItem("close", "true") //AutoFCB(Close) 'Allow tab to close if codes rerun without pressing - var(button)'
+            localStorage.setItem("close", "true") //AutoFCB(Close) 'Allow tab to close if codes rerun without pressing - var(button)'
             main()
         }
     }
