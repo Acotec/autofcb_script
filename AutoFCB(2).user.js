@@ -250,12 +250,12 @@
             }
         }
 
-        function DontOpen_LinkByName(linkName) {
-            //alert('Dontopen '+linkName)
+        function DontOpen_LinkByName(linkName) {            
             let check = _DontOpen.some((link) => {
-                return new RegExp('^' + linkName, "ig").test(link)
+                return new RegExp('^'+link, "ig").test(linkName)
             }) //check if linkName is among _DontOpen
             if (check) {
+                //alert('Dontopen '+linkName)
                 return true
             } else {
                 return false
