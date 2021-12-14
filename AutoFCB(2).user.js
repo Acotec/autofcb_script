@@ -15,7 +15,7 @@
     var _order_ByName = [];
     var button = document.createElement("button");
     var body = document.getElementsByClassName('col item')[1].getElementsByClassName('content-box')[0];
-    var gist_id="d4805d8a56793fa59d47e464c6eec243"
+    var gist_id="e6ed9bbe9feb74e71030c680feba9d71"
     var hideVisitedShortlinks=document.querySelector("div.shide").querySelector(".cwrapper");/checked/gi.test(hideVisitedShortlinks.innerHTML)||(setTimeout(()=>{hideVisitedShortlinks.click();hideVisitedShortlinks.dispatchEvent(new Event("change"))},1500));//check if visited shortlink is hide or not.
     function AutoUpdateDontOpen() {
         var AutoUpdateB = document.createElement("button");
