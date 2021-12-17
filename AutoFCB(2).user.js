@@ -1,25 +1,21 @@
 (function() {
-    if (window.history.replaceState) {
-        window.history.replaceState(null, null, window.location.href)
-    } //to prevent resubmit on refresh and back button
-    'use strict';
-    var _DontOpen = GM_getResourceText("_DontOpen").replace(/'|"|\[|\]|\s/ig, '').split(',').filter(e => e);
-    var shortlinks_name = GM_getResourceText("shortlinks_name").replace(/'|"|\[|\]|\s/ig, '').split(',').filter(e => e);
-    var _open_link_fast = [].map(e => e.toLowerCase());
-    var _alreadyRun = GM_getValue("_alreadyRun");
-    var _available_link = parseInt(document.getElementsByClassName('amount')[1].textContent);
-    var _views_ToVisit = Array.from(document.querySelectorAll('span#views'));
-    var _num_ofLink_toVisit = [];
-    var _sort_and_Re_Dup = [];
-    var _ordered_LinkToVisitOnPage = [];
-    var _order_ByName = [];
-    var button = document.createElement("button");
-    var body = document.getElementsByClassName('col item')[1].getElementsByClassName('content-box')[0];
-    var gist_id="e6ed9bbe9feb74e71030c680feba9d71"
-    var hideVisitedShortlinks=document.querySelector("div.shide").querySelector(".cwrapper");/checked/gi.test(hideVisitedShortlinks.innerHTML)||(setTimeout(()=>{hideVisitedShortlinks.click();hideVisitedShortlinks.dispatchEvent(new Event("change"))},1500));//check if visited shortlink is hide or not.
+    var _DontOpen = GM_getResourceText("_DontOpen").replace(/'|"|\[|\]|\s/ig, '').split(',').filter(e => e),
+        shortlinks_name = GM_getResourceText("shortlinks_name").replace(/'|"|\[|\]|\s/ig, '').split(',').filter(e => e),
+        _open_link_fast = [].map(e => e.toLowerCase()),
+        _alreadyRun = GM_getValue("_alreadyRun"),
+        _available_link = parseInt(document.getElementsByClassName('amount')[1].textContent),
+        _views_ToVisit = Array.from(document.querySelectorAll('span#views')),
+        _num_ofLink_toVisit = [],
+        _sort_and_Re_Dup = [],
+        _ordered_LinkToVisitOnPage = [],
+        _order_ByName = [],
+        button = document.createElement("button"),
+        body = document.getElementsByClassName('col item')[1].getElementsByClassName('content-box')[0],
+        gist_id="e6ed9bbe9feb74e71030c680feba9d71",
+        hideVisitedShortlinks=document.querySelector("div.shide").querySelector(".cwrapper");/checked/gi.test(hideVisitedShortlinks.innerHTML)||(setTimeout(()=>{hideVisitedShortlinks.click();hideVisitedShortlinks.dispatchEvent(new Event("change"))},1500));//check if visited shortlink is hide or not.
     function AutoUpdateDontOpen() {
-        var AutoUpdateB = document.createElement("button");
-        var AutoUpdate = document.getElementsByClassName('col item')[2].getElementsByClassName('content-box')[0];
+        var AutoUpdateB = document.createElement("button"),
+            AutoUpdate = document.getElementsByClassName('col item')[2].getElementsByClassName('content-box')[0];
         AutoUpdate.appendChild(AutoUpdateB);
         try {
             if (GM_getValue("AutoUpdate")) {
@@ -60,13 +56,39 @@
         }
     }
 
+    function static_speed() {
+        let staticB = document.createElement("button"),
+            static =document.getElementsByClassName('col item')[0].getElementsByClassName('content-box')[0];
+        static.appendChild(staticB);
+        try {
+            if (GM_getValue("static")) {
+                staticB.innerHTML = 'Static_ON';
+                staticB.style = "background-color:Violet;color:white"
+            } else {
+                GM_setValue("static", false)
+                staticB.innerHTML = 'Static_OFF';
+                staticB.style = "background-color:black;color:white"
+            }
+            staticB.addEventListener('click', function(e) {
+                if (GM_getValue("static", true)) {
+                    GM_setValue("static", false);
+                    staticB.innerHTML = 'Static_OFF';
+                    staticB.style = "background-color:black;color:white"
+                } else {
+                    GM_setValue("static", true);
+                    staticB.innerHTML = 'Static_ON'
+                    staticB.style = "background-color:Violet;color:white"
+                }
+            });
+        } catch (err) {}
+    }
     function SpeedCtr() {
         var speed = GM_getValue('speed', 0.1); //the duration speed
         "undefined" != String(speed) && "NaN" != String(speed) && "null" != String(GM_getValue(speed)) || GM_setValue("speed", 0.1);
-        var body1 = document.getElementsByClassName('col item')[0].getElementsByClassName('content-box')[0]
-        var dis = document.createElement("p");
-        var speed_add = document.createElement("button");
-        var speed_sub = document.createElement("button");
+        var body1 = document.getElementsByClassName('col item')[0].getElementsByClassName('content-box')[0],
+            dis = document.createElement("p"),
+            speed_add = document.createElement("button"),
+            speed_sub = document.createElement("button");
         body1.appendChild(speed_add);
         speed_add.innerHTML = 'speed +'
         body1.appendChild(speed_sub);
@@ -84,13 +106,13 @@
                 GM_setValue("speed", speed);
             }
             dis.innerHTML = 'CS - ' + GM_getValue('speed') + ' Seconds'
-        })
+        });
+        static_speed()
     }
 
-    function DelayShort() {
-        //var dcoin = document.getElementById('visit239')[1]
-        var ShortDelayButton = document.createElement("button"); //create button to enable/disable the Delay of some shortlink b4 they open
-        var ShortDelay = document.getElementsByClassName("shortlinks")[0] //Append somewhere
+    function DelayShort() {       
+        var ShortDelayButton = document.createElement("button"),//create button to enable/disable the Delay of some shortlink b4 they open
+            ShortDelay = document.getElementsByClassName("shortlinks")[0]; //Append somewhere
         ShortDelay.appendChild(ShortDelayButton)
         try {
             if (GM_getValue("delayShort")) {
@@ -111,8 +133,6 @@
             });
         } catch (err) {}
     }
-
-
     AutoUpdateDontOpen() //run
     //function to get the shortlinks that should not be open
     if (GM_getValue("_alreadyRun") != true) {
@@ -154,9 +174,9 @@
 
     function Runcode(response = null) {
         /* variable for appearFunction */
-        var i = 0; //index (for looping purpose)
-        var interval; //for setInterval
-        var duration; //for setInterval duration
+        var i = 0, //index (for looping purpose)
+            interval, //for setInterval
+            duration; //for setInterval duration
         localStorage.setItem("close", "true")
         if (GM_getValue('AutoUpdate')) {
             let getDontOpen = response.responseText.replace(/'|"|\[|\]|\s/ig, '').split(',').filter(e => e);
@@ -213,9 +233,9 @@
         function ViewsOnPage() {
             for (let i = 0; i < _views_ToVisit.length; i++) {
                 //console.log(views[i])
-                let getViewsLeft = _views_ToVisit[i].textContent // get the views_left
-                let exTotalNum = getViewsLeft.match(/\d*\//)[0] // extract views_left number with /
-                let totalView = getViewsLeft.replace(exTotalNum, '') // replace / with ''
+                let getViewsLeft = _views_ToVisit[i].textContent, // get the views_left
+                    exTotalNum = getViewsLeft.match(/\d*\//)[0], // extract views_left number with /
+                    totalView = getViewsLeft.replace(exTotalNum, ''); // replace / with ''
                 _num_ofLink_toVisit.push(parseInt(totalView)) // add to _num_ofLink_toVisit
             }
         }
@@ -238,9 +258,9 @@
         function Ordered_LinkToView() {
             for (let i = 0; i < _sort_and_Re_Dup.length; i++) {
                 for (let j = 0; j < _views_ToVisit.length; j++) {
-                    let b = _views_ToVisit[j].textContent.includes(_sort_and_Re_Dup[i])
-                    let ext_name = _views_ToVisit[j].parentElement.parentElement.getElementsByClassName('name')[0].innerText
-                    let check = ext_name.replace(ext_name.match(/\sFCT*\d*.*/), '')
+                    let b = _views_ToVisit[j].textContent.includes(_sort_and_Re_Dup[i]),
+                        ext_name = _views_ToVisit[j].parentElement.parentElement.getElementsByClassName('name')[0].innerText,
+                        check = ext_name.replace(ext_name.match(/\sFCT*\d*.*/), '');
                     //use this to extract only the link name without it FctToken [ext_name.replace(ext_name.match(/\s*\d* .*/), '')]
                     if (_order_ByName.includes(check) == false) {
                         _ordered_LinkToVisitOnPage.push(_views_ToVisit[j])
@@ -250,7 +270,7 @@
             }
         }
 
-        function DontOpen_LinkByName(linkName) {            
+        function DontOpen_LinkByName(linkName) {
             let check = _DontOpen.some((link) => {
                 return new RegExp('^'+link, "ig").test(linkName)
             }) //check if linkName is among _DontOpen
@@ -317,10 +337,16 @@
                             if (shortlinks_name.includes(linkName.toLowerCase())) {
                                 //console.log(linkName)
                                 i++; //increment the index
-                                if (/^coin$/ig.test(linkName.toLowerCase()) && GM_getValue("delayShort")) {
-                                    duration = 10 * 1000 //duration can be increase in (secs)
+                                if(GM_getValue("use_static",'')&&GM_getValue("static")){
+                                    var time = new Date();time.toLocaleString('en-US', { hour: 'numeric', hour12: true }).replace(/\s+/ig,'')
+                                    if(/(0|0[0-8]|[1-8])am/ig.test(time)){duration = 3*1000}//time is around 0am-8am
+                                    else if(/(9|1[0-1])am/ig.test(time)){duration = 5*1000}//time is around 9am-11am
+                                    else if(/(12|(0|1[0-9]|[1-9]))pm/ig.test(time)){duration = 10*1000}//time is around 12pm-11pm
+                                    else{duration = 5*1000}
                                 } else {
                                     duration = i * GM_getValue('speed') * 1000
+                                    GM_setValue("use_static",true)
+
                                 }
                                 //console.log(i)
                                 var inter = setInterval(() => {
@@ -332,10 +358,11 @@
                                         appear() // re-run
                                     }
                                 }, duration)
-                                } else {
-                                    console.log(linkName.toLowerCase(), 'Is not among shortlinks to open')
-                                    update_DontOpen(linkName)
                                 }
+                            else {
+                                console.log(linkName.toLowerCase(), 'Is not among shortlinks to open')
+                                update_DontOpen(linkName)
+                            }
 
                         }
                     } //end
@@ -363,6 +390,7 @@
                     //console.log('Done opening')
                     button.innerHTML = 'Done opening-Click to Run Again'
                     clearInterval(interval)
+                    GM_setValue("use_static",false)
                     Re_run()
                     //window.close();//window.close()
                 }
