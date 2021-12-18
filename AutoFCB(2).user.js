@@ -339,14 +339,13 @@
                                 i++; //increment the index
                                 if(GM_getValue("use_static",'')&&GM_getValue("static")){
                                     var time = new Date();time.toLocaleString('en-US', { hour: 'numeric', hour12: true }).replace(/\s+/ig,'')
-                                    if(/(0|0[0-8]|[1-8])am/ig.test(time)){duration = 3*1000}//time is around 0am-8am
+                                    if(/(12|0[0-8]|[1-8])am/ig.test(time)){duration = 2*1000}//time is around 12am-8am
                                     else if(/(9|1[0-1])am/ig.test(time)){duration = 5*1000}//time is around 9am-11am
-                                    else if(/(12|(0|1[0-9]|[1-9]))pm/ig.test(time)){duration = 10*1000}//time is around 12pm-11pm
-                                    else{duration = 5*1000}
+                                    else if(/(12|(0|1[0-9]|[1-9]))pm/ig.test(time)){duration = 8*1000}//time is around 12pm-11pm
+                                    else{duration = 3*1000}
                                 } else {
                                     duration = i * GM_getValue('speed') * 1000
                                     GM_setValue("use_static",true)
-
                                 }
                                 //console.log(i)
                                 var inter = setInterval(() => {
