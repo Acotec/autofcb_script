@@ -1,5 +1,5 @@
 (function() {
-    if (window.history.replaceState) {
+     if (window.history.replaceState) {
         window.history.replaceState(null, null, window.location.href)
     } //to prevent resubmit on refresh and back button
     //---------------------------------------------------------//
@@ -11,29 +11,32 @@
         grey_icon = GM_getValue('grey_icon', ''),
         red_icon = GM_getValue('red_icon', ''),
         autoFCB = 'auto(faucet|claim|bitco).(in|org)',
-        gist_id = 'e6ed9bbe9feb74e71030c680feba9d71',       
+        gist_id = 'e6ed9bbe9feb74e71030c680feba9d71',
         delayOn = GM_getResourceText("delaypage").replace(/[^\w\d,-.]/ig, '').split(',').filter(e => e);
-    //alert(listOfAcceptDomains)
-    const toDataURL = url => fetch(url)
-    .then(response => response.blob())
-    .then(blob => new Promise((resolve, reject) => {
-        const reader = new FileReader()
-        reader.onloadend = () => resolve(reader.result)
-        reader.onerror = reject
-        reader.readAsDataURL(blob)
-    }))
-    green_icon || (green_icon = "https://yuumari.com/images/icon-ex-alb-green-128.png", toDataURL(green_icon).then(e => {
-        console.log("RESULT:", e);
-        GM_setValue("green_icon", e)
-    }));
-    grey_icon || (grey_icon = "https://yuumari.com/images/icon-ex-alb-grey-128.png", toDataURL(grey_icon).then(e => {
-        console.log("RESULT:", e);
-        GM_setValue("grey_icon", e)
-    }));
-    red_icon || (red_icon = " https://yuumari.com/images/icon-ex-alb-red-128.png", toDataURL(red_icon).then(e => {
-        console.log("RESULT:", e);
-        GM_setValue("red_icon", e)
-    }));
+
+    function getIcons(){
+        fetch("https://gist.githubusercontent.com/Harfho/63966e7f7145a5607e710a4cdcb31906/raw/ALBypass_icons.json")
+            .then((response) => {
+            if (response.ok) {
+                return response.json();
+            }
+            return Promise.reject(response);
+        }).then((result) => {
+            //console.log(result);
+            let green_icon=result.green_icon
+            let grey_icon=result.grey_icon
+            let red_icon=result.red_icon
+            GM_setValue('green_icon',green_icon)
+            GM_setValue('grey_icon',grey_icon)
+            GM_setValue('red_icon',red_icon)
+        }).catch((error) => {
+            //alert(error)
+            //console.error(error);
+            console.log("can't get Icons because of ", error)
+            window.location.reload(false)
+        });
+    }
+    0!=green_icon&&0!=grey_icon&&0!=red_icon||getIcons();
 
     function favicon(icon_base64) {
         let link = document.createElement("link");
@@ -215,9 +218,8 @@
             //console.log(result);
             var elements = []
             for (let keys in result) {
-                elements.push(result[keys])
+                elements.push(...result[keys])
             }
-            elements = elements.flat(Infinity)
             //console.log(elements);
             GM_setValue('domains', JSON.stringify(elements))
         }).catch((error) => {
