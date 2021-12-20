@@ -7,7 +7,7 @@
         if(sessionStorage.getItem('tryagain')==null){sessionStorage.setItem('tryagain',1);tryagain=sessionStorage.getItem('tryagain')};
         if(parseInt(tryagain)<=time){
             GM_addElement(document.getElementsByTagName('head')[0], 'meta',{'http-equiv':"refresh",'content':"120"});//content-in-seconds
-            document.title='r-' + document.title;
+            //document.title='r-' + document.title;
             sessionStorage.setItem('tryagain',parseInt(tryagain)+1)
         }
         else{
