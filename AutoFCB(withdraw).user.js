@@ -2,7 +2,6 @@
     'use strict';
     var coinS=GM_getValue("coin",null);
     var loop = 0
-
     function selectFromDropDown(id,value){
         //alert(value)
         if(String(value)!=='undefined'){
@@ -11,9 +10,7 @@
         }else{
             console.log('No currency claim yet ')
         }
-
     }
-
     waitForKeyElements('#estimatedc', (element) => {
         coinS=element.innerText.replace(/[\W\d]+/,"")
         GM_setValue("coin",coinS)
@@ -22,16 +19,16 @@
         if(/payment has been sent/gi.test(element.innerHTML) && /dashboard\/withdraw\/\w+/gi.test(window.location.href)){
             let url='https://'+ window.location.host +'/dashboard/shortlinks'//'https://'+ window.location.host +'/dashboard/claim/manual'
             window.location=url
-        }
-        else if(/credited to your balance/gi.test(element.innerHTML) && /claim\/manual/gi.test(window.location.href)){
+        }else if(/credited to your balance/gi.test(element.innerHTML) && /claim\/manual/gi.test(window.location.href)){
             let url='https://'+ window.location.host +'/dashboard/withdraw/'+ GM_getValue("coin")
             window.location=url
         }else if(/You entered an incorrect answer for the captcha, please try again|wrong.?answer/.test(element.innerHTML)){
             window.location.reload(false)
+        }else if(/You have not entered your FaucetPay E-mail address yet/ig.test(element.innerHTML)){
+            window.location.href = 'https://autobitco.in/dashboard/settings'
         }
 
     },false);
-
 
     if(/claim\/manual/gi.test(window.location.href)){
         selectFromDropDown('#currency-select','USDT')
@@ -48,21 +45,35 @@
                     selectFromDropDown('#captcha-select','solvemedia')}
             }
         },100)
-        }
-    else if(/dashboard\/withdraw\/\w+/gi.test(window.location.href)){
-        let inter=setInterval(function () {
-            loop+=1
-            let amount = document.querySelector("#amount").value==0
-            if(amount&&!(loop>=50)){
-                document.querySelector("#maxwith-addon").click()
-            }
-            else{
-                clearInterval(inter);clearInterval(inter)
-                if(!amount){
-                    selectFromDropDown('#processor','faucetpay')
-                    selectFromDropDown('#captcha-select','solvemedia')}
+        } else if(/dashboard\/withdraw\/\w+/gi.test(window.location.href)){
+            let inter=setInterval(function () {
+                loop+=1
+                let amount = document.querySelector("#amount").value==0
+                if(amount&&!(loop>=50)){
+                    document.querySelector("#maxwith-addon").click()
+                }
+                else{
+                    clearInterval(inter);clearInterval(inter)
+                    if(!amount){
+                        selectFromDropDown('#processor','faucetpay')
+                        selectFromDropDown('#captcha-select','solvemedia')}
 
+                }
+            },100)
+            } else if(/dashboard\/withdraw\#settings/ig.test(window.location.href)){
+                waitForKeyElements('#form-faucetpaymail', (element) => {
+                    let faucetpayemail = element.querySelector("#faucetpay-email")
+                    faucetpayemail.value="raymondserah501@gmail.com"
+                    faucetpayemail.dispatchEvent(new Event('change'));
+                    try{let saveEmail = Array.from(document.querySelectorAll("button")).pop()
+                    saveEmail.click()}catch(e){console.log("Already Saved Email")}
+                });
+                setTimeout(()=>{window.location ='https://'+ window.location.host +'/dashboard/withdraw/'+ GM_getValue("coin")},3000)
+            } else if(/dashboard\/settings/ig.test(window.location.href)){
+                waitForKeyElements('.input-group', (element) => {
+                    let Email = element.getElementsByTagName('input')[0].value
+                    GM_setValue('Email',Email)
+                    window.location = "https://autobitco.in/dashboard/withdraw#settings"
+                });
             }
-        },100)
-        }
 })();
