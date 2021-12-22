@@ -64,16 +64,18 @@
                 waitForKeyElements('#form-faucetpaymail', (element) => {
                     let faucetpayemail = element.querySelector("#faucetpay-email")
                     faucetpayemail.value=GM_getValue('Email')
-                    faucetpayemail.dispatchEvent(new Event('change'));
-                    try{let saveEmail = Array.from(document.querySelectorAll("button")).pop()
-                    saveEmail.click()}catch(e){console.log("Already Saved Email")}
+                    try{let saveEmail = Array.from(document.querySelectorAll("button")),saveButton = [];
+                        saveEmail.filter((b)=>{if(/save/ig.test(b.innerText)){saveButton.push(b)}})
+                        saveButton=saveButton.pop()
+                        saveButton.click();saveButton.dispatchEvent(new Event('change'));
+                       }catch(e){console.log("Already Saved Email")}
                 });
                 setTimeout(()=>{window.location ='https://'+ window.location.host +'/dashboard/withdraw/'+ GM_getValue("coin")},3000)
             } else if(/dashboard\/settings/ig.test(window.location.href)){
                 waitForKeyElements('.input-group', (element) => {
                     let Email = element.getElementsByTagName('input')[0].value
                     GM_setValue('Email',Email)
-                    window.location = "https://autobitco.in/dashboard/withdraw#settings"
+                    window.location = 'https://'+ window.location.host+"/dashboard/withdraw#settings"
                 });
             }
 })();
