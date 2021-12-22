@@ -63,7 +63,7 @@
             } else if(/dashboard\/withdraw\#settings/ig.test(window.location.href)){
                 waitForKeyElements('#form-faucetpaymail', (element) => {
                     let faucetpayemail = element.querySelector("#faucetpay-email")
-                    faucetpayemail.value="raymondserah501@gmail.com"
+                    faucetpayemail.value=GM_getValue('Email')
                     faucetpayemail.dispatchEvent(new Event('change'));
                     try{let saveEmail = Array.from(document.querySelectorAll("button")).pop()
                     saveEmail.click()}catch(e){console.log("Already Saved Email")}
