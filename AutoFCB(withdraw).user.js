@@ -26,7 +26,7 @@
         }else if(/You entered an incorrect answer for the captcha, please try again|wrong.?answer/.test(element.innerHTML)){
             window.location.reload(false)
         }else if(/You have not entered your FaucetPay E-mail address yet/ig.test(element.innerHTML)){
-            window.location.href = 'https://autobitco.in/dashboard/settings'
+            window.location.href = 'https://'+ window.location.host +'/dashboard/settings'
         }
 
     },false);
