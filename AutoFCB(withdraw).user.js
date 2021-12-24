@@ -17,8 +17,9 @@
     },false);
     waitForKeyElements('.toast-message', (element) => {
         if(/payment has been sent/gi.test(element.innerHTML) && /dashboard\/withdraw\/\w+/gi.test(window.location.href)){
-            let url='https://'+ window.location.host +'/dashboard/shortlinks'//'https://'+ window.location.host +'/dashboard/claim/manual'
-            window.location=url
+            // let url='https://'+ window.location.host +'/dashboard/shortlinks'//'https://'+ window.location.host +'/dashboard/claim/manual'
+            // window.location=url
+            window.location.reload()
         }else if(/credited to your balance/gi.test(element.innerHTML) && /claim\/manual/gi.test(window.location.href)){
             let url='https://'+ window.location.host +'/dashboard/withdraw/'+ GM_getValue("coin")
             window.location=url
@@ -48,7 +49,8 @@
         } else if(/dashboard\/withdraw\/\w+/gi.test(window.location.href)){
             let inter=setInterval(function () {
                 loop+=1
-                let amount = document.querySelector("#amount").value==0
+                let amount = document.querySelector("#amount").value;
+                amount=amount==0
                 if(amount&&!(loop>=50)){
                     document.querySelector("#maxwith-addon").click()
                 }
@@ -59,23 +61,24 @@
                         selectFromDropDown('#captcha-select','solvemedia')}
 
                 }
-            },100)
-            } else if(/dashboard\/withdraw\#settings/ig.test(window.location.href)){
-                var saveButton=[]
-                waitForKeyElements('#form-faucetpaymail', (element) => {
-                    let faucetpayemail = element.querySelector("#faucetpay-email")
-                    faucetpayemail.value=GM_getValue('Email')
-                    var saveEmail = Array.from(document.querySelectorAll("button"));
-                    saveEmail.filter((b)=>{if(/save/ig.test(b.innerText)){saveButton.push(b)}})
-                    saveButton=saveButton.pop()
-                });
-                setTimeout(()=>{saveButton.click();document.dispatchEvent(new Event('change'))},2000)
-                setTimeout(()=>{window.location ='https://'+ window.location.host +'/dashboard/withdraw/'+ GM_getValue("coin")},5000)
-            } else if(/dashboard\/settings/ig.test(window.location.href)){
-                waitForKeyElements('.input-group', (element) => {
-                    let Email = element.getElementsByTagName('input')[0].value
-                    GM_setValue('Email',Email)
-                    window.location = 'https://'+ window.location.host+"/dashboard/withdraw#settings"
-                });
-            }
+            },100);
+            let url='https://'+ window.location.host +'/dashboard/shortlinks';if(/0.0000000+/.test(document.querySelector("#availableBalance").innerText)){window.location=url}
+        } else if(/dashboard\/withdraw\#settings/ig.test(window.location.href)){
+            var saveButton=[]
+            waitForKeyElements('#form-faucetpaymail', (element) => {
+                let faucetpayemail = element.querySelector("#faucetpay-email")
+                faucetpayemail.value=GM_getValue('Email')
+                var saveEmail = Array.from(document.querySelectorAll("button"));
+                saveEmail.filter((b)=>{if(/save/ig.test(b.innerText)){saveButton.push(b)}})
+                saveButton=saveButton.pop()
+            });
+            setTimeout(()=>{saveButton.click();document.dispatchEvent(new Event('change'))},2000)
+            setTimeout(()=>{window.location ='https://'+ window.location.host +'/dashboard/withdraw/'+ GM_getValue("coin")},5000)
+        } else if(/dashboard\/settings/ig.test(window.location.href)){
+            waitForKeyElements('.input-group', (element) => {
+                let Email = element.getElementsByTagName('input')[0].value
+                GM_setValue('Email',Email)
+                window.location = 'https://'+ window.location.host+"/dashboard/withdraw#settings"
+            });
+        }
 })();
