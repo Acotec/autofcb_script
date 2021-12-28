@@ -1,6 +1,6 @@
 (function() {
     'use strict';
-    var coinS=GM_getValue("coin",null);
+    var coinS=GM_getValue("withdraw_coin",false);
     var loop = 0
     function selectFromDropDown(id,value){
         //alert(value)
@@ -12,8 +12,8 @@
         }
     }
     waitForKeyElements('#estimatedc', (element) => {
-        coinS=element.innerText.replace(/[\W\d]+/,"")
-        GM_setValue("coin",coinS)
+        coinS=element.innerText.replace(/[\W\d]+/ig,"")
+        GM_setValue("withdraw_coin",coinS)
     },false);
     waitForKeyElements('.toast-message', (element) => {
         if(/payment has been sent/gi.test(element.innerHTML) && /dashboard\/withdraw\/\w+/gi.test(window.location.href)){
@@ -21,18 +21,19 @@
             // window.location=url
             window.location.reload()
         }else if(/credited to your balance/gi.test(element.innerHTML) && /claim\/manual/gi.test(window.location.href)){
-            let url='https://'+ window.location.host +'/dashboard/withdraw/'+ GM_getValue("coin")
+            let url='https://'+ window.location.host +'/dashboard/withdraw/'+ GM_getValue("withdraw_coin")
             window.location=url
         }else if(/You entered an incorrect answer for the captcha, please try again|wrong.?answer/.test(element.innerHTML)){
             window.location.reload(false)
         }else if(/You have not entered your FaucetPay E-mail address yet/ig.test(element.innerHTML)){
             window.location.href = 'https://'+ window.location.host +'/dashboard/settings'
         }
-
     },false);
 
     if(/claim\/manual/gi.test(window.location.href)){
-        selectFromDropDown('#currency-select','USDT')
+        let def_coin= "USDT"
+        selectFromDropDown('#currency-select',def_coin)
+        if(coinS==false){GM_setValue("withdraw_coin",def_coin)}
         let inter=setInterval(function () {
             loop+=1
             let token = document.querySelector("#token-amount").value==0
@@ -42,7 +43,7 @@
             else{
                 clearInterval(inter);clearInterval(inter)
                 if(!token){
-                    selectFromDropDown('#currency-select',GM_getValue("coin"))
+                    selectFromDropDown('#currency-select',GM_getValue("withdraw_coin"))
                     selectFromDropDown('#captcha-select','solvemedia')}
             }
         },100)
@@ -50,6 +51,9 @@
             let inter=setInterval(function () {
                 loop+=1
                 let amount = document.querySelector("#amount").value;
+                let coinname = document.querySelector("p.amount").innerText.replace(/[\W\d]/ig,"")
+                GM_setValue( "available_balance",amount);
+                GM_setValue( "coin",coinname);
                 amount=amount==0
                 if(amount&&!(loop>=50)){
                     document.querySelector("#maxwith-addon").click()
@@ -62,7 +66,14 @@
 
                 }
             },100);
-            let url='https://'+ window.location.host +'/dashboard/shortlinks';if(/0.0000000+/.test(document.querySelector("#availableBalance").innerText)){window.location=url}
+            let url='https://'+ window.location.host +'/dashboard/shortlinks';
+            if(/0.0000000+/.test(document.querySelector("#availableBalance").innerText)){setTimeout(()=>{window.location.href=url},1000)}
+        } else if(/dashboard\/settings/ig.test(window.location.href)){
+            waitForKeyElements('.input-group', (element) => {
+                let Email = element.getElementsByTagName('input')[0].value
+                GM_setValue('Email',Email)
+                window.location = 'https://'+ window.location.host+"/dashboard/withdraw#settings"
+            });
         } else if(/dashboard\/withdraw\#settings/ig.test(window.location.href)){
             var saveButton=[]
             waitForKeyElements('#form-faucetpaymail', (element) => {
@@ -73,12 +84,6 @@
                 saveButton=saveButton.pop()
             });
             setTimeout(()=>{saveButton.click();document.dispatchEvent(new Event('change'))},2000)
-            setTimeout(()=>{window.location ='https://'+ window.location.host +'/dashboard/withdraw/'+ GM_getValue("coin")},5000)
-        } else if(/dashboard\/settings/ig.test(window.location.href)){
-            waitForKeyElements('.input-group', (element) => {
-                let Email = element.getElementsByTagName('input')[0].value
-                GM_setValue('Email',Email)
-                window.location = 'https://'+ window.location.host+"/dashboard/withdraw#settings"
-            });
+            setTimeout(()=>{window.location ='https://'+ window.location.host +'/dashboard/withdraw/'+ GM_getValue("withdraw_coin")},3000)
         }
 })();
