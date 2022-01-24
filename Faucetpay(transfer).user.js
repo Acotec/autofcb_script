@@ -27,7 +27,7 @@
         }, false, );
 
         //location = 'https://faucetpay.io/transfer'
-        if (GM_getValue("ForceTransfer", false) == true) {
+        if (GM_getValue("ForceTransfer", false) == true || !(parseInt(wallet_balance) == 0)) {
             msg = "Forcing -- Transfer"
             GM_notification({
                 title: window.location.host,
