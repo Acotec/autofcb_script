@@ -67,6 +67,11 @@
                 }
             },100);
             let url='https://'+ window.location.host +'/dashboard/shortlinks';
+            waitForKeyElements(".error-desc", (element) => {
+                if(/.*entered your E-mail address that you registered to FaucetPay.*/ig.test(element.textContent)){
+                    window.location.href='https://'+window.location.host+"/dashboard/settings"
+                }
+            });
             if(/0.0000000+/.test(document.querySelector("#availableBalance").innerText)){setTimeout(()=>{window.location.href=url},1000)}
         } else if(/dashboard\/settings/ig.test(window.location.href)){
             waitForKeyElements('.input-group', (element) => {
