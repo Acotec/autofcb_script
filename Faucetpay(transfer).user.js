@@ -27,7 +27,7 @@
         }, false, );
 
         //location = 'https://faucetpay.io/transfer'
-        if (GM_getValue("ForceTransfer", false) == true || !(parseInt(wallet_balance) == 0)) {
+        if (GM_getValue("ForceTransfer", false) == true && (parseFloat(wallet_balance) != 0)) {
             msg = "Forcing -- Transfer"
             GM_notification({
                 title: window.location.host,
@@ -41,7 +41,7 @@
             window.location.replace('https://faucetpay.io/transfer')
         } else if (!(payouttoday >= 3) || parseInt(wallet_balance) == 0) {
             var acct = document.querySelector('.avatar-initial').innerText
-            GM_setValue("ForceTransfer", false)
+            //GM_setValue("ForceTransfer", false)
             if (payouttoday < 3) {
                 msg = 'You have not withdraw from all the faucet sites Today in ' + acct
                 GM_notification({
