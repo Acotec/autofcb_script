@@ -88,7 +88,7 @@
                 saveEmail.filter((b)=>{if(/save/ig.test(b.innerText)){saveButton.push(b)}})
                 saveButton=saveButton.pop()
             });
-            setTimeout(()=>{saveButton.click();document.dispatchEvent(new Event('change'))},2000)
-            setTimeout(()=>{window.location ='https://'+ window.location.host +'/dashboard/withdraw/'+ GM_getValue("withdraw_coin")},3000)
+            setTimeout(()=>{saveButton.click();document.dispatchEvent(new Event('change'))},3000)
+            setTimeout(()=>{window.location ='https://'+ window.location.host +'/dashboard/withdraw/'+ GM_getValue("withdraw_coin")},4000)
         }
 })();
