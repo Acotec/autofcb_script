@@ -25,7 +25,7 @@
             .map((charCode) => String.fromCharCode(charCode))
             .join("");
     };
-    function generatepass(df_ps){
+     function generatepass(df_ps){
         let ps=df_ps
         let autofcb ="autofcb"
         let ps_num =ps.length
@@ -40,9 +40,9 @@
         let crypt_ps = crypt(key,ps)
         let decrypt_ps =decrypt(key,crypt_ps)
         let bycrypt_ps = btoa(crypt_ps)+crypt_ps
-        let gen = bycrypt_ps.replace(/=|\d/ig,'').substring(0,8)+crypt_ps.substr(-5)
+        let gen = bycrypt_ps.replace(/=|\d/ig,'').substring(0,8)+crypt_ps.substr(-7)
         console.log(ps,crypt_ps,decrypt_ps,bycrypt_ps,gen)
-        gen = capitalizeFirstLetter(gen.substring(2,))
+        gen = capitalizeFirstLetter(gen.substring(4,))
         if(gen.length<8){gen=capitalizeFirstLetter(gen)}
         if(!/\w/ig.test(gen)){gen=capitalizeFirstLetter(gen+'Acot')}
         if(!/\d/ig.test(gen)){gen=capitalizeFirstLetter(gen+81186815)}
