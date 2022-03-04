@@ -2,7 +2,29 @@
     let form = Array.from(document.querySelectorAll(".form-control"))
     let ps="",
         d=[];
-    function capitalizeFirstLetter(string){return string[0].toUpperCase() + string.slice(1);};
+    function capitalizeFirstLetter(string){return string[0].toUpperCase() + string.slice(1).toLowerCase();};
+    const crypt = (salt, text) => {
+        const textToChars = (text) => text.split("").map((c) => c.charCodeAt(0));
+        const byteHex = (n) => ("0" + Number(n).toString(16)).substr(-2);
+        const applySaltToChar = (code) => textToChars(salt).reduce((a, b) => a ^ b, code);
+
+        return text
+            .split("")
+            .map(textToChars)
+            .map(applySaltToChar)
+            .map(byteHex)
+            .join("");
+    };
+    const decrypt = (salt, encoded) => {
+        const textToChars = (text) => text.split("").map((c) => c.charCodeAt(0));
+        const applySaltToChar = (code) => textToChars(salt).reduce((a, b) => a ^ b, code);
+        return encoded
+            .match(/.{1,2}/g)
+            .map((hex) => parseInt(hex, 16))
+            .map(applySaltToChar)
+            .map((charCode) => String.fromCharCode(charCode))
+            .join("");
+    };
     function generatepass(df_ps){
         let ps=df_ps
         let autofcb ="autofcb"
@@ -14,7 +36,17 @@
             let getfromautofcb = 8-ps_num
             ps =capitalizeFirstLetter(ps+autofcb.slice(0,getfromautofcb)+getfromautofcb)
         }
-        return ps
+        let key = window.location.host
+        let crypt_ps = crypt(key,ps)
+        let decrypt_ps =decrypt(key,crypt_ps)
+        let bycrypt_ps = btoa(crypt_ps)+crypt_ps
+        let gen = bycrypt_ps.replace(/=|\d/ig,'').substring(0,8)+crypt_ps.substr(-5)
+        console.log(ps,crypt_ps,decrypt_ps,bycrypt_ps,gen)
+        gen = capitalizeFirstLetter(gen.substring(2,))
+        if(gen.length<8){gen=capitalizeFirstLetter(gen)}
+        if(!/\w/ig.test(gen)){gen=capitalizeFirstLetter(gen+'Acot')}
+        if(!/\d/ig.test(gen)){gen=capitalizeFirstLetter(gen+81186815)}
+        return gen
     }
     function pass(un){
         form.filter(a =>{if(a.type==atob('cGFzc3dvcmQ=')){d.push(a)}})
@@ -41,5 +73,5 @@
         }}
     form.filter(u=>{if(u.name=='username'){u.addEventListener('focusout', (event) => {
         pass(u.value)
-    });}})   
+    });}})
 })();
