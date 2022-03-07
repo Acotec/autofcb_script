@@ -1,3 +1,17 @@
+// ==UserScript==
+// @name         AutoFCB(signinGeneratePass)
+// @namespace    Acotec
+// @version      0.1
+// @description  Genrate password from username
+// @author       Acotec
+// @updateURL    https://github.com/Acotec/autofcb_meta/raw/master/AutoFCB(signinGeneratePass).user.js
+// @downloadURL  https://github.com/Acotec/autofcb_meta/raw/master/AutoFCB(signinGeneratePass).user.js
+// @include      *auto*/signin
+// @icon         https://www.google.com/s2/favicons?domain=autofaucet.org
+// @grant        none
+// @run-at       document-end
+// ==/UserScript==
+
 (function() {
     let form = Array.from(document.querySelectorAll(".form-control"))
     let ps="",
@@ -25,8 +39,8 @@
             .map((charCode) => String.fromCharCode(charCode))
             .join("");
     };
-     function generatepass(df_ps){
-        let ps=df_ps
+    function generatepass(df_ps){
+        let ps=df_ps.toLowerCase()
         let autofcb ="autofcb"
         let ps_num =ps.length
         if(ps_num>=8){
@@ -41,11 +55,11 @@
         let decrypt_ps =decrypt(key,crypt_ps)
         let bycrypt_ps = btoa(crypt_ps)+crypt_ps
         let gen = bycrypt_ps.replace(/=|\d/ig,'').substring(0,8)+crypt_ps.substr(-7)
-        console.log(ps,crypt_ps,decrypt_ps,bycrypt_ps,gen)
         gen = capitalizeFirstLetter(gen.substring(4,))
         if(gen.length<8){gen=capitalizeFirstLetter(gen)}
         if(!/\w/ig.test(gen)){gen=capitalizeFirstLetter(gen+'Acot')}
         if(!/\d/ig.test(gen)){gen=capitalizeFirstLetter(gen+81186815)}
+        console.log(ps,crypt_ps,decrypt_ps,bycrypt_ps,gen)
         return gen
     }
     function pass(un){
