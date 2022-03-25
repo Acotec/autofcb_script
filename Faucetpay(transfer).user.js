@@ -1,6 +1,7 @@
 (function () {
     var msg;
     const sendTo = "harfho77@gmail.com"
+    const coin_amount= 0.00000010
 
     function getAmount() {
         let getindex = Cryptocurrency.selectedIndex
@@ -10,7 +11,16 @@
         Amount.dispatchEvent(new Event('change'));
         GM_setValue('defaultCrypto', getvalue)
     }
-
+    function selectCoinToWithdrawn(){
+        var toWithdrawn=[]
+        Array.from(document.querySelectorAll('.form-control')[0]).forEach((e)=>{
+            let coin_name = e.innerText.toLowerCase()
+            let coin_amount_from_Storage = GM_getValue(coin_name)
+            coin_amount_from_Storage>coin_amount&&toWithdrawn.push(coin_name);
+        })
+        console.log(toWithdrawn)
+        toWithdrawn&&GM_setValue("defaultCrypto",toWithdrawn.slice(-1)[0]);
+    }
     function ForceTransfer() {
         0 == GM_getValue("ForceTransfer", !1) ? GM_setValue("ForceTransfer", !0) : GM_setValue("ForceTransfer", !1);
         window.location.reload()
@@ -79,13 +89,13 @@
             }
         }, false, );
 
-
         var Cryptocurrency_details = document.querySelectorAll('.form-control'),
             Cryptocurrency = Cryptocurrency_details[0],
             Amount = Cryptocurrency_details[1],
             UsernameOrEmail_Address = Cryptocurrency_details[2];
 
         Cryptocurrency.addEventListener('change', getAmount);
+        selectCoinToWithdrawn()
         var defaultCrypto = GM_getValue('defaultCrypto', null);
         if (defaultCrypto) {
             for (let i = 0; i <= Cryptocurrency.length - 1; i++) {
