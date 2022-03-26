@@ -1,7 +1,10 @@
 (function () {
-    var msg;
+    var msg
+    var toWithdrawn=[];
     const sendTo = "harfho77@gmail.com"
-    const coin_amount= 0.00000010
+    const coin_amount= 0.00000150
+    const useradminurl = 'https://faucetpay.io/page/user-admin'
+    const transferurl = 'https://faucetpay.io/transfer'
 
     function getAmount() {
         let getindex = Cryptocurrency.selectedIndex
@@ -12,7 +15,6 @@
         GM_setValue('defaultCrypto', getvalue)
     }
     function selectCoinToWithdrawn(){
-        var toWithdrawn=[]
         Array.from(document.querySelectorAll('.form-control')[0]).forEach((e)=>{
             let coin_name = e.innerText.toLowerCase()
             let coin_amount_from_Storage = GM_getValue(coin_name)
@@ -36,7 +38,6 @@
             }
         }, false, );
 
-        //location = 'https://faucetpay.io/transfer'
         if (GM_getValue("ForceTransfer", false) == true && (parseFloat(wallet_balance) != 0)) {
             msg = "Forcing -- Transfer"
             GM_notification({
@@ -48,7 +49,7 @@
                     alert(msg)
                 }
             });
-            window.location.replace('https://faucetpay.io/transfer')
+            window.location.replace(transferurl)
         } else if (!(payouttoday >= 3) || parseInt(wallet_balance) == 0) {
             var acct = document.querySelector('.avatar-initial').innerText
             //GM_setValue("ForceTransfer", false)
@@ -76,7 +77,7 @@
                 });
             };
         } else {
-            window.location.replace('https://faucetpay.io/transfer')
+            window.location.replace(transferurl)
             // ;GM_setValue('transfer',false)
         }
     };
@@ -85,7 +86,7 @@
             msg = element.innerText
             if (/Your transfer has been successfully completed/gi.test(msg)) {
                 //var transfer = GM_setValue('transfer',true)
-                window.location.replace('https://faucetpay.io/page/user-admin')
+                window.location.replace(useradminurl)
             }
         }, false, );
 
