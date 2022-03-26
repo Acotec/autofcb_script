@@ -4,7 +4,7 @@
     var coinS = GM_getValue("withdraw_coin", null);
     var fpcoins = ["LTC", "DASH", "BCH", "DGB", "TRX", "USDT", "ZEC", "BNB", "SOL", "DOGE"].sample() //"BTC","ETH"
     var loop = 0
-    if (coinS) {GM_setValue("withdraw_coin", coinS)} else {GM_setValue("withdraw_coin", fpcoins)}
+    //if (coinS) {GM_setValue("withdraw_coin", coinS)} else {GM_setValue("withdraw_coin", fpcoins)}
     function selectFromDropDown(id, value) {
         //alert(value)
         if (String(value) !== 'undefined') {
@@ -27,9 +27,9 @@
         if (/payment has been sent/gi.test(element.innerHTML) && /dashboard\/withdraw\/\w+/gi.test(window.location.href)) {
             // let url='https://'+ window.location.host +'/dashboard/shortlinks'//'https://'+ window.location.host +'/dashboard/claim/manual'
             // window.location=url
+            GM_setValue("withdraw_coin", null)
             window.location.reload()
         } else if (/credited to your balance/gi.test(element.innerHTML) && /claim\/manual/gi.test(window.location.href)) {
-            GM_setValue("withdraw_coin", null)
             let url = 'https://' + window.location.host + '/dashboard/withdraw/' + GM_getValue("withdraw_coin")
             window.location = url
         } else if (/we can not process your payment right now/ig.test(element.innerHTML)) {
@@ -55,6 +55,7 @@
                 clearInterval(inter);
                 clearInterval(inter)
                 if (!token) {
+                    if (coinS) {GM_setValue("withdraw_coin", coinS)} else {GM_setValue("withdraw_coin", fpcoins)}
                     selectFromDropDown('#currency-select', GM_getValue("withdraw_coin"))
                     selectFromDropDown('#captcha-select', 'solvemedia')
                 }
@@ -72,7 +73,6 @@
                     document.querySelector("#maxwith-addon").click()
                 } else {
                     clearInterval(inter);
-                    clearInterval(inter)
                     if (!amount) {
                         selectFromDropDown('#processor', 'faucetpay')
                         selectFromDropDown('#captcha-select', 'solvemedia')
@@ -87,6 +87,7 @@
                 }
             });
             if (/0.0000000+/.test(document.querySelector("#availableBalance").innerText)) {
+                GM_setValue("withdraw_coin", null)
                 setTimeout(() => {
                     window.location.href = url
                 }, 1000)
