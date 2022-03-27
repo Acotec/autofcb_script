@@ -3,21 +3,24 @@
     Array.prototype.sample = function() {return this[Math.floor(Math.random() * this.length)];}
     var coinS = GM_getValue("withdraw_coin", null);
     var fpcoins = ["LTC", "DASH", "BCH", "DGB", "TRX", "USDT", "ZEC", "BNB", "SOL", "DOGE"].sample() //"BTC","ETH"
+    var captchatoselect = ['solvemedia'].sample()//"recaptcha"
     var loop = 0
     //if (coinS) {GM_setValue("withdraw_coin", coinS)} else {GM_setValue("withdraw_coin", fpcoins)}
     function selectFromDropDown(id, value) {
         //alert(value)
-        if (String(value) !== 'undefined') {
-            let element = document.querySelector(id);
-            Array.from(element.options).filter(a => {
-                if (RegExp(value, 'ig').test(a.innerText.replace(/\s/ig, ''))) {
-                    a.selected = true;
-                    element.dispatchEvent(new Event('change'));
-                }
-            });
-        } else {
-            console.log('No currency claim yet ')
-        }
+        try{
+            if (String(value) !== 'undefined') {
+                let element = document.querySelector(id);
+                Array.from(element.options).filter(a => {
+                    if (RegExp(value, 'ig').test(a.innerText.replace(/\s/ig, ''))) {
+                        a.selected = true;
+                        element.dispatchEvent(new Event('change'));
+                    }
+                });
+            } else {
+                console.log('No currency claim yet ')
+            }
+        }catch(e){}
     }
     waitForKeyElements('#estimatedc', (element) => {
         coinS = element.innerText.replace(/[\W\d]+/ig, "")
@@ -53,11 +56,10 @@
                 document.querySelector("#maxmcla-addon").click()
             } else {
                 clearInterval(inter);
-                clearInterval(inter)
                 if (!token) {
                     if (coinS) {GM_setValue("withdraw_coin", coinS)} else {GM_setValue("withdraw_coin", fpcoins)}
                     selectFromDropDown('#currency-select', GM_getValue("withdraw_coin"))
-                    selectFromDropDown('#captcha-select', 'solvemedia')
+                    selectFromDropDown('#captcha-select', captchatoselect)
                 }
             }
         }, 100)
@@ -73,9 +75,10 @@
                     document.querySelector("#maxwith-addon").click()
                 } else {
                     clearInterval(inter);
+                    clearInterval(inter)
                     if (!amount) {
                         selectFromDropDown('#processor', 'faucetpay')
-                        selectFromDropDown('#captcha-select', 'solvemedia')
+                        selectFromDropDown('#captcha-select', captchatoselect)
                     }
 
                 }
