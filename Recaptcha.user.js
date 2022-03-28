@@ -19,7 +19,7 @@ var requestCount = 0;
 var recaptchaLanguage = qSelector("html").getAttribute("lang");
 var audioUrl = "";
 var recaptchaInitialStatus = qSelector(RECAPTCHA_STATUS) ? qSelector(RECAPTCHA_STATUS).innerText : ""
-var serversList = ["https://engageub.pythonanywhere.com", "https://engageub1.pythonanywhere.com";
+var serversList = ["https://engageub.pythonanywhere.com", "https://engageub1.pythonanywhere.com"];
 var latencyList = Array(serversList.length).fill(10000);
 //Check for visibility && Click the check box
 function isHidden(el) {
@@ -159,8 +159,7 @@ var startInterval = setInterval(function() {
             clearInterval(startInterval);
         }
         if (requestCount > MAX_ATTEMPTS) {
-            console.log("Attempted Max Retries. Stopping the solver");
-            qSelector("#recaptcha-anchor-label").textContent = "Attempted Max Retries. Stopping the solver"
+            console.log("Attempted Max Retries. Stopping the solver");            
             solved = true;
             clearInterval(startInterval);
         }
