@@ -148,6 +148,8 @@ if (qSelector(CHECK_BOX)) {
         checkboxLabel("Verification expired")
     } else {
         //qSelector(CHECK_BOX).click();
+        console.log("I'M NOT A ROBOT")
+        checkboxLabel("I'M NOT A ROBOT")
         console.log('qSelector(CHECK_BOX).click();')
     }
 } else if (window.location.href.includes("bframe")) {
@@ -168,6 +170,8 @@ var startInterval = setInterval(function() {
                 checkBoxClicked = true;
             } else {
                 //qSelector(CHECK_BOX).click();
+                console.log("I'M NOT A ROBOT")
+                checkboxLabel("I'M NOT A ROBOT")
                 checkBoxClicked = true;
                 console.log('qSelector(CHECK_BOX).click();', 1)
             }
