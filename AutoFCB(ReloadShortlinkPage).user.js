@@ -1,12 +1,11 @@
-(function() {
-    'use strict';
-    function refresh(){
+function refresh(){
         let tryagain;
-        var time = 7
+        var time = 3;//7
+        var wait = 60;//120
         tryagain=sessionStorage.getItem('tryagain')
         if(sessionStorage.getItem('tryagain')==null){sessionStorage.setItem('tryagain',1);tryagain=sessionStorage.getItem('tryagain')};
         if(parseInt(tryagain)<=time){
-            GM_addElement(document.getElementsByTagName('head')[0], 'meta',{'http-equiv':"refresh",'content':"120"});//content-in-seconds
+            GM_addElement(document.getElementsByTagName('head')[0], 'meta',{'http-equiv':"refresh",'content':String(wait)});//content-in-seconds
             //document.title='r-' + document.title;
             sessionStorage.setItem('tryagain',parseInt(tryagain)+1)
         }
@@ -30,8 +29,7 @@
             }
     }
     }//endof function
-    var autofcb = /auto(faucet|claim|bitco).(in|org).+(shortlink.*|claim.+|withdraw.*|exchange)/ig.test(window.location.href)
+    var autofcb = /auto(faucet|claim|bitco).(in|org).+(shortlink.*|claim.+|withdraw.*|exchange)|.*autofaucet.dutchycorp.space.*/ig.test(window.location.href)
     if(!autofcb){
         refresh()
     }
-})();
