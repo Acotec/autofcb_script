@@ -22,6 +22,13 @@ var audioUrl = "";
 var recaptchaInitialStatus = qSelector(RECAPTCHA_STATUS) ? qSelector(RECAPTCHA_STATUS).innerText : ""
 var serversList = ["https://engageub.pythonanywhere.com", "https://engageub1.pythonanywhere.com"];
 var latencyList = Array(serversList.length).fill(10000);
+
+function AutoSolveCaptcha() {
+    0 == GM_getValue("AutoSolveCaptcha", !1) ? GM_setValue("AutoSolveCaptcha", !0) : GM_setValue("AutoSolveCaptcha", !1);
+    window.location.reload()
+};
+GM_registerMenuCommand("AutoSolveCaptcha - " + GM_getValue('AutoSolveCaptcha', false), AutoSolveCaptcha, "AutoSolveCaptcha");
+
 //Check for visibility && Click the check box
 function isHidden(el) {
     return (el.offsetParent === null)
@@ -147,9 +154,9 @@ if (qSelector(CHECK_BOX)) {
         console.log('verification expired')
         checkboxLabel("Verification expired")
     } else {
+        GM_getValue("AutoSolveCaptcha",!1)&&qSelector(CHECK_BOX).click()
         //qSelector(CHECK_BOX).click();
         console.log("I'M NOT A ROBOT")
-        checkboxLabel("I'M NOT A ROBOT")
         console.log('qSelector(CHECK_BOX).click();')
     }
 } else if (window.location.href.includes("bframe")) {
@@ -166,12 +173,13 @@ var startInterval = setInterval(function() {
             if (/Verification expired/ig.test(qSelector(RECAPTCHA_STATUS) && (qSelector(RECAPTCHA_STATUS).innerText))) {
                 console.log('verification expired 1')
                 checkboxLabel("Verification expired")
+                GM_getValue("AutoSolveCaptcha",!1)&&qSelector(CHECK_BOX).click()
                 //qSelector(CHECK_BOX).click();
                 checkBoxClicked = true;
             } else {
+                GM_getValue("AutoSolveCaptcha",!1)&&qSelector(CHECK_BOX).click()
                 //qSelector(CHECK_BOX).click();
                 console.log("I'M NOT A ROBOT")
-                checkboxLabel("I'M NOT A ROBOT")
                 checkBoxClicked = true;
                 console.log('qSelector(CHECK_BOX).click();', 1)
             }
