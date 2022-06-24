@@ -233,4 +233,4 @@ var startInterval = setInterval(function() {
         checkboxLabel("Error occurred while solving")
         clearInterval(startInterval);
     }
-},1000);
+},0);
