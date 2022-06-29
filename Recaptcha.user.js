@@ -173,7 +173,6 @@ var startInterval = setInterval(function() {
             if (/Verification expired/ig.test(qSelector(RECAPTCHA_STATUS) && (qSelector(RECAPTCHA_STATUS).innerText))) {
                 console.log('verification expired 1')
                 checkboxLabel("Verification expired")
-                document.title='Verification expired-'+document.title
                 GM_getValue("AutoSolveCaptcha",!1)&&qSelector(CHECK_BOX).click()
                 //qSelector(CHECK_BOX).click();
                 checkBoxClicked = true;
@@ -190,13 +189,11 @@ var startInterval = setInterval(function() {
             solved = true;
             console.log("SOLVED");
             checkboxLabel("SOLVED")
-            document.title='SOLVED-'+document.title
             clearInterval(startInterval);
         }
         if (requestCount > MAX_ATTEMPTS) {
             console.log("Attempted Max Retries. Stopping the solver");
             checkboxLabel("Attempted Max Retries")
-            document.title='Attempted Max Retries-'+document.title
             solved = true;
             clearInterval(startInterval);
         }
@@ -228,7 +225,6 @@ var startInterval = setInterval(function() {
         if (qSelector(DOSCAPTCHA) && qSelector(DOSCAPTCHA).innerText.length > 0) {
             console.log("Automated Queries Detected");
             checkboxLabel("Automated Queries Detected")
-            document.title="Automated Queries Detected-"+document.title
             clearInterval(startInterval);
         }
     } catch (err) {
@@ -237,4 +233,4 @@ var startInterval = setInterval(function() {
         checkboxLabel("Error occurred while solving")
         clearInterval(startInterval);
     }
-},0);
+},);
