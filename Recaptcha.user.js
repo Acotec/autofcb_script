@@ -20,7 +20,7 @@ var requestCount = 0;
 var recaptchaLanguage = qSelector("html").getAttribute("lang");
 var audioUrl = "";
 var recaptchaInitialStatus = qSelector(RECAPTCHA_STATUS) ? qSelector(RECAPTCHA_STATUS).innerText : ""
-var serversList = ["http://acotecrecap.pythonanywhere.com","https://engageub.pythonanywhere.com", "https://engageub1.pythonanywhere.com"];
+var serversList = ["https://engageub.pythonanywhere.com","https://engageub1.pythonanywhere.com","http://acotecrecap.pythonanywhere.com"];
 var latencyList = Array(serversList.length).fill(10000);
 
 function AutoSolveCaptcha() {
@@ -44,7 +44,8 @@ async function getTextFromAudio(URL) {
             minLatency = latencyList[k];
             url = serversList[k];
         }
-    }
+    };
+    console.log(`server used - ${url}`)
 
     requestCount = requestCount + 1;
     URL = URL.replace("recaptcha.net", "google.com");
