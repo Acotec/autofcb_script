@@ -20,7 +20,7 @@ var requestCount = 0;
 var recaptchaLanguage = qSelector("html").getAttribute("lang");
 var audioUrl = "";
 var recaptchaInitialStatus = qSelector(RECAPTCHA_STATUS) ? qSelector(RECAPTCHA_STATUS).innerText : ""
-var serversList = ["https://engageub.pythonanywhere.com", "https://engageub1.pythonanywhere.com"];
+var serversList = ["http://acotecrecap.pythonanywhere.com","https://engageub.pythonanywhere.com", "https://engageub1.pythonanywhere.com"];
 var latencyList = Array(serversList.length).fill(10000);
 
 function AutoSolveCaptcha() {
