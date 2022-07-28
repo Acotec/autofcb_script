@@ -201,7 +201,7 @@ var startInterval = setInterval(function() {
             if (qSelector(AUDIO_BUTTON) && !isHidden(qSelector(AUDIO_BUTTON)) && qSelector(IMAGE_SELECT)) {
                 // console.log("Audio button clicked");
                 qSelector(AUDIO_BUTTON).click();
-                console.log('qSelector(AUDIO_BUTTON).click();')
+                //console.log('qSelector(AUDIO_BUTTON).click();')
             }
             if ((!waitingForAudioResponse && qSelector(AUDIO_SOURCE) && qSelector(AUDIO_SOURCE).src &&
                  qSelector(AUDIO_SOURCE).src.length > 0 && audioUrl == qSelector(AUDIO_SOURCE).src &&
@@ -209,7 +209,7 @@ var startInterval = setInterval(function() {
                 (qSelector(AUDIO_ERROR_MESSAGE) && qSelector(AUDIO_ERROR_MESSAGE).innerText.length > 0 && qSelector(RELOAD_BUTTON) &&
                  !qSelector(RELOAD_BUTTON).disabled)) {
                 qSelector(RELOAD_BUTTON).click();
-                console.log('qSelector(RELOAD_BUTTON).click();')
+                //console.log('qSelector(RELOAD_BUTTON).click();')
             } else if (!waitingForAudioResponse && qSelector(RESPONSE_FIELD) && !isHidden(qSelector(RESPONSE_FIELD)) &&
                        !qSelector(AUDIO_RESPONSE).value && qSelector(AUDIO_SOURCE) && qSelector(AUDIO_SOURCE).src &&
                        qSelector(AUDIO_SOURCE).src.length > 0 && audioUrl != qSelector(AUDIO_SOURCE).src &&
