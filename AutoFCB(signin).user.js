@@ -1,7 +1,7 @@
 (function() {
     'use strict';
     Array.prototype.sample = function() {return this[Math.floor(Math.random() * this.length)];}
-    var captchatoselect = ["recaptcha",'solvemedia'].sample()
+    var captchatoselect = ["recaptcha"].sample()//'solvemedia'
     var loop=0
     var repeat = 3
     if(/autofaucet.org\/auth\/signin/ig.test(window.location.href)){
