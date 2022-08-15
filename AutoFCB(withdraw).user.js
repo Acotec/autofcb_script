@@ -2,8 +2,8 @@
     'use strict';
     Array.prototype.sample = function() {return this[Math.floor(Math.random() * this.length)];}
     var coinS = GM_getValue("withdraw_coin", null);
-    var fpcoins = ["LTC", "DASH", "BCH", "DGB", "TRX", "USDT", "ZEC", "BNB", "SOL", "DOGE"].sample() //"BTC","ETH"
-    var captchatoselect = ["recaptcha",'solvemedia'].sample()
+    var fpcoins = ["USDT"].sample()//["LTC", "DASH", "BCH", "DGB", "TRX", "USDT", "ZEC", "BNB", "SOL", "DOGE"] "BTC","ETH"
+    var captchatoselect = ["recaptcha"].sample()//'solvemedia'
     var loop = 0
     //if (coinS) {GM_setValue("withdraw_coin", coinS)} else {GM_setValue("withdraw_coin", fpcoins)}
     function selectFromDropDown(id, value) {
